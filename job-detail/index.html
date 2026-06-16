@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FederalWork — Job Detail</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #F4F1EC;
+    --bg-white:  #FDFCFA;
+    --bg-panel:  #EEEAE2;
+    --slate:     #1B3A4B;
+    --slate-mid: #2A5068;
+    --slate-lt:  #3D6E88;
+    --terra:     #C4622D;
+    --terra-lt:  #E8875A;
+    --terra-pale:#FBE8DC;
+    --sage:      #3A6B4C;
+    --sage-lt:   #4E8E63;
+    --sage-pale: #DAF0E3;
+    --sky:       #1E6FA6;
+    --sky-pale:  #D6EDFB;
+    --amber:     #B87A1A;
+    --amber-pale:#FEF3D7;
+    --violet:    #5C3D8F;
+    --violet-pale:#EDE6F9;
+    --red:       #C13030;
+    --red-pale:  #FDEAEA;
+    --ink:       #1A1A1A;
+    --ink-mid:   #3E3E3E;
+    --muted:     #7A7A7A;
+    --border:    #D8D2C8;
+    --border-dk: #BFB8AC;
+    --white:     #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--ink); }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; gap: 24px;
+    padding: 14px 48px;
+    background: var(--slate);
+    box-shadow: 0 2px 16px rgba(27,58,75,0.18);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+  .logo-mark {
+    width: 32px; height: 32px; background: var(--terra);
+    clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif; font-size: 13px; font-weight: 700; color: #fff;
+  }
+  .logo-text { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .logo-text span { color: var(--terra-lt); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { color: rgba(255,255,255,0.65); font-size: 13px; font-weight: 500; text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: #fff; }
+  .nav-actions { display: flex; gap: 10px; align-items: center; margin-left: auto; }
+  .btn-outline { padding: 8px 18px; border: 1px solid rgba(255,255,255,0.35); color: #fff; background: transparent; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; }
+  .btn-solid { padding: 8px 18px; background: var(--terra); color: #fff; border: none; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb {
+    padding: 14px 48px;
+    background: var(--bg-white);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--muted);
+  }
+  .breadcrumb a { color: var(--slate); text-decoration: none; font-weight: 600; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb span { color: var(--border-dk); }
+
+  /* ── HERO HEADER ── */
+  .job-hero {
+    background: var(--slate);
+    padding: 40px 48px 0;
+    position: relative; overflow: hidden;
+  }
+  .job-hero::before {
+    content: '';
+    position: absolute; right: 0; top: 0; bottom: 0; width: 420px;
+    background: linear-gradient(135deg, rgba(196,98,45,0.12) 0%, rgba(30,111,166,0.08) 100%);
+    pointer-events: none;
+  }
+  .job-hero::after {
+    content: '';
+    position: absolute; right: 80px; top: 50%;
+    transform: translateY(-50%);
+    width: 220px; height: 220px;
+    background: rgba(196,98,45,0.06);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-top {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 32px;
+    position: relative; z-index: 1;
+  }
+  .hero-left { flex: 1; }
+
+  .hero-agency-row {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 18px;
+  }
+  .agency-badge {
+    width: 52px; height: 52px;
+    background: var(--terra-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; color: var(--terra);
+    border-radius: 6px; flex-shrink: 0;
+  }
+  .agency-info {}
+  .agency-name { font-size: 12px; font-weight: 700; color: var(--terra-lt); text-transform: uppercase; letter-spacing: 1.5px; }
+  .agency-sub { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+  .job-title-main {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(26px, 3.5vw, 38px);
+    font-weight: 700; color: #fff; line-height: 1.15;
+    margin-bottom: 18px;
+  }
+
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .hero-tag {
+    font-size: 11px; padding: 4px 12px; font-weight: 700; border-radius: 2px;
+  }
+  .ht-terra  { background: rgba(196,98,45,0.25); color: #F4AA80; border: 1px solid rgba(196,98,45,0.4); }
+  .ht-sky    { background: rgba(30,111,166,0.25); color: #7EC8F0; border: 1px solid rgba(30,111,166,0.4); }
+  .ht-sage   { background: rgba(58,107,76,0.3); color: #8CD4A4; border: 1px solid rgba(58,107,76,0.45); }
+  .ht-amber  { background: rgba(184,122,26,0.25); color: #F0C060; border: 1px solid rgba(184,122,26,0.4); }
+  .ht-new    { background: var(--terra); color: #fff; border: none; }
+
+  /* Quick stats row */
+  .hero-stats {
+    display: flex; gap: 0; flex-wrap: wrap;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 8px;
+    position: relative; z-index: 1;
+  }
+  .hero-stat {
+    padding: 18px 28px 18px 0;
+    margin-right: 28px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hs-label { font-size: 10px; color: rgba(255,255,255,0.45); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+  .hs-value { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; color: #fff; line-height: 1; }
+  .hs-value.accent { color: var(--terra-lt); }
+  .hs-sub { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+  /* CTA panel (right side of hero) */
+  .hero-cta {
+    background: var(--bg-white);
+    padding: 28px;
+    width: 320px; flex-shrink: 0;
+    position: relative; z-index: 1;
+    border-left: 4px solid var(--terra);
+    margin-bottom: 0;
+    align-self: flex-start;
+    margin-top: 4px;
+  }
+  .cta-deadline {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 16px;
+  }
+  .deadline-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--terra); flex-shrink: 0;
+    animation: pulse 1.8s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+  .deadline-text { font-size: 13px; font-weight: 700; color: var(--terra); }
+  .deadline-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .cta-salary {
+    background: var(--bg-panel);
+    padding: 14px 16px; margin-bottom: 16px;
+  }
+  .cta-salary-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 4px; }
+  .cta-salary-value { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; color: var(--slate); }
+  .cta-salary-range { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  .cta-apply {
+    width: 100%; padding: 14px;
+    background: var(--terra); color: #fff;
+    border: none; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    transition: background 0.2s; margin-bottom: 10px;
+  }
+  .cta-apply:hover { background: var(--terra-lt); }
+
+  .cta-secondary {
+    display: flex; gap: 8px;
+  }
+  .cta-save, .cta-share {
+    flex: 1; padding: 10px;
+    border: 1.5px solid var(--border-dk); background: transparent;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600;
+    color: var(--ink-mid); cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .cta-save:hover { border-color: var(--terra); color: var(--terra); }
+  .cta-share:hover { border-color: var(--slate); color: var(--slate); }
+
+  .cta-info {
+    margin-top: 14px; padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .cta-info-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 5px 0; font-size: 12px;
+  }
+  .cir-label { color: var(--muted); font-weight: 500; }
+  .cir-value { color: var(--ink); font-weight: 700; }
+  .cir-value.c-sage { color: var(--sage); }
+  .cir-value.c-amber { color: var(--amber); }
+  .cir-value.c-terra { color: var(--terra); }
+
+  /* ── BODY LAYOUT ── */
+  .body-layout {
+    display: grid; grid-template-columns: 1fr 320px;
+    gap: 0; max-width: 100%; align-items: start;
+    padding: 0 48px 60px;
+    margin-top: 32px;
+  }
+  .main-col { padding-right: 40px; }
+  .side-col {}
+
+  /* ── SECTION HEADERS ── */
+  .section-block { margin-bottom: 36px; }
+  .section-title {
+    font-size: 10px; font-weight: 800; color: var(--slate);
+    text-transform: uppercase; letter-spacing: 2px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--slate);
+    margin-bottom: 18px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title-accent { color: var(--terra); }
+
+  /* ── OVERVIEW GRID ── */
+  .overview-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    margin-bottom: 32px;
+  }
+  .overview-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    padding: 16px 18px;
+    border-left: 3px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .overview-card:hover { border-left-color: var(--terra); }
+  .oc-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 6px; }
+  .oc-value { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.3; }
+  .oc-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+  /* ── PROSE CONTENT ── */
+  .prose h3 {
+    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700;
+    color: var(--slate); margin: 24px 0 10px;
+  }
+  .prose h3:first-child { margin-top: 0; }
+  .prose p {
+    font-size: 14px; color: var(--ink-mid); line-height: 1.8;
+    margin-bottom: 14px; font-weight: 400;
+  }
+  .prose ul {
+    margin: 0 0 16px 0; padding: 0; list-style: none;
+  }
+  .prose ul li {
+    font-size: 14px; color: var(--ink-mid); line-height: 1.7;
+    padding: 5px 0 5px 22px; position: relative; font-weight: 400;
+  }
+  .prose ul li::before {
+    content: '';
+    position: absolute; left: 0; top: 13px;
+    width: 8px; height: 2px;
+    background: var(--terra);
+  }
+
+  /* Requirement blocks */
+  .req-block {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    padding: 20px 24px; margin-bottom: 12px;
+    border-left: 3px solid var(--border-dk);
+    transition: border-left-color 0.2s;
+  }
+  .req-block:hover { border-left-color: var(--slate); }
+  .req-block.required { border-left-color: var(--terra); }
+  .req-block.preferred { border-left-color: var(--sage-lt); }
+  .req-tag {
+    font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+    margin-bottom: 6px;
+  }
+  .req-tag.rt-req { color: var(--terra); }
+  .req-tag.rt-pref { color: var(--sage); }
+  .req-block h4 { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .req-block p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* Duties list with step numbers */
+  .duty-list { counter-reset: duties; }
+  .duty-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 14px 0; border-bottom: 1px solid var(--border);
+  }
+  .duty-item:last-child { border-bottom: none; }
+  .duty-num {
+    font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700;
+    color: var(--bg-panel); line-height: 1; flex-shrink: 0;
+    width: 28px;
+  }
+  .duty-text { font-size: 14px; color: var(--ink-mid); line-height: 1.7; }
+  .duty-text strong { color: var(--slate); font-weight: 700; display: block; margin-bottom: 2px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* Benefits */
+  .benefits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .benefit-card {
+    background: var(--bg-white); border: 1px solid var(--border);
+    padding: 16px 18px; display: flex; align-items: flex-start; gap: 12px;
+    transition: box-shadow 0.2s;
+  }
+  .benefit-card:hover { box-shadow: 0 2px 12px rgba(27,58,75,0.08); }
+  .benefit-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; border-radius: 4px;
+  }
+  .bi-slate  { background: #D8E8F0; }
+  .bi-sage   { background: var(--sage-pale); }
+  .bi-terra  { background: var(--terra-pale); }
+  .bi-amber  { background: var(--amber-pale); }
+  .bi-sky    { background: var(--sky-pale); }
+  .bi-violet { background: var(--violet-pale); }
+  .benefit-info {}
+  .benefit-name { font-size: 13px; font-weight: 700; color: var(--ink); }
+  .benefit-desc { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+
+  /* ── STICKY SIDEBAR ── */
+  .sticky-side { position: sticky; top: 80px; }
+
+  .side-card {
+    background: var(--bg-white); border: 1px solid var(--border);
+    padding: 22px; margin-bottom: 16px;
+  }
+  .side-card-title {
+    font-size: 10px; font-weight: 800; color: var(--slate);
+    text-transform: uppercase; letter-spacing: 2px;
+    padding-bottom: 10px; border-bottom: 2px solid var(--slate);
+    margin-bottom: 16px;
+  }
+
+  /* Application steps */
+  .app-step {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 10px 0; border-bottom: 1px dashed var(--border);
+  }
+  .app-step:last-child { border-bottom: none; }
+  .step-num {
+    width: 26px; height: 26px; flex-shrink: 0;
+    background: var(--slate); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800; border-radius: 50%;
+  }
+  .step-num.done { background: var(--sage-lt); }
+  .step-num.active { background: var(--terra); animation: pulse 1.8s infinite; }
+  .step-info {}
+  .step-name { font-size: 13px; font-weight: 700; color: var(--ink); }
+  .step-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* Similar jobs */
+  .similar-job {
+    padding: 12px 0; border-bottom: 1px solid var(--border);
+    cursor: pointer; transition: all 0.2s;
+    border-left: 3px solid transparent;
+    padding-left: 0;
+  }
+  .similar-job:hover { border-left-color: var(--terra); padding-left: 8px; }
+  .similar-job:last-child { border-bottom: none; }
+  .sj-agency { font-size: 10px; font-weight: 700; color: var(--terra); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+  .sj-title { font-size: 13px; font-weight: 700; color: var(--ink); line-height: 1.3; margin-bottom: 5px; }
+  .sj-meta { display: flex; gap: 12px; font-size: 11px; color: var(--muted); }
+  .sj-grade { font-weight: 700; color: var(--slate); }
+
+  /* Alert signup */
+  .alert-card {
+    background: linear-gradient(135deg, var(--slate) 0%, var(--slate-mid) 100%);
+    padding: 22px; margin-bottom: 16px;
+  }
+  .alert-card h4 { font-family: 'Fraunces', serif; font-size: 17px; color: #fff; margin-bottom: 6px; }
+  .alert-card p { font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 16px; line-height: 1.5; }
+  .alert-input {
+    width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2); color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px;
+    outline: none; margin-bottom: 8px;
+  }
+  .alert-input::placeholder { color: rgba(255,255,255,0.4); }
+  .alert-btn {
+    width: 100%; padding: 10px; background: var(--terra); color: #fff;
+    border: none; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px; font-weight: 700; cursor: pointer;
+    text-transform: uppercase; letter-spacing: 0.5px; transition: background 0.2s;
+  }
+  .alert-btn:hover { background: var(--terra-lt); }
+
+  /* Share row at bottom */
+  .share-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 20px 0; border-top: 1px solid var(--border); margin-top: 8px;
+    font-size: 12px; color: var(--muted); font-weight: 600;
+  }
+  .share-btn {
+    padding: 6px 14px; border: 1.5px solid var(--border-dk);
+    background: transparent; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px; font-weight: 600; color: var(--ink-mid);
+    cursor: pointer; transition: all 0.2s; border-radius: 2px;
+  }
+  .share-btn:hover { border-color: var(--slate); color: var(--slate); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border-dk); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="logo-mark">F</div>
+    <div class="logo-text">Federal<span>Work</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="#">Find Jobs</a>
+    <a href="#">Veterans</a>
+    <a href="#">Agencies</a>
+    <a href="#">Resources</a>
+  </div>
+  <div class="nav-actions">
+    <button class="btn-outline">Sign In</button>
+    <button class="btn-solid">Create Profile</button>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="#">Home</a><span>/</span>
+  <a href="#">Search Results</a><span>/</span>
+  <a href="#">Cybersecurity</a><span>/</span>
+  <span style="color:var(--ink-mid);font-weight:600;">Supervisory Cybersecurity Analyst</span>
+</div>
+
+<!-- JOB HERO -->
+<div class="job-hero">
+  <div class="hero-top">
+    <div class="hero-left">
+      <div class="hero-agency-row">
+        <div class="agency-badge">DHS</div>
+        <div class="agency-info">
+          <div class="agency-name">Dept. of Homeland Security</div>
+          <div class="agency-sub">Cybersecurity & Infrastructure Security Agency (CISA)</div>
+        </div>
+      </div>
+      <h1 class="job-title-main">Supervisory Cybersecurity Analyst<br><em style="font-style:italic;color:var(--terra-lt);font-size:0.85em;">(Threat Intelligence)</em></h1>
+      <div class="hero-tags">
+        <span class="hero-tag ht-new">NEW — Posted Feb 17</span>
+        <span class="hero-tag ht-terra">⚡ High Demand</span>
+        <span class="hero-tag ht-amber">TS/SCI Required</span>
+        <span class="hero-tag ht-sage">Remote Eligible</span>
+        <span class="hero-tag ht-sky">Direct Hire Authority</span>
+      </div>
+    </div>
+
+    <!-- CTA PANEL -->
+    <div class="hero-cta">
+      <div class="cta-deadline">
+        <div class="deadline-dot"></div>
+        <div>
+          <div class="deadline-text">Closes March 3, 2025</div>
+          <div class="deadline-sub">12 days remaining to apply</div>
+        </div>
+      </div>
+      <div class="cta-salary">
+        <div class="cta-salary-label">Annual Salary Range</div>
+        <div class="cta-salary-value">$112,015 – $172,075</div>
+        <div class="cta-salary-range">GS-13 / Step 1–10 · Washington D.C. Locality</div>
+      </div>
+      <button class="cta-apply">Apply on FederalWork →</button>
+      <div class="cta-secondary">
+        <button class="cta-save">☆ Save Job</button>
+        <button class="cta-share">↗ Share</button>
+      </div>
+      <div class="cta-info">
+        <div class="cta-info-row">
+          <span class="cir-label">Open to</span>
+          <span class="cir-value">U.S. Citizens</span>
+        </div>
+        <div class="cta-info-row">
+          <span class="cir-label">Applicants</span>
+          <span class="cir-value c-sage">84 (Low competition)</span>
+        </div>
+        <div class="cta-info-row">
+          <span class="cir-label">Vacancies</span>
+          <span class="cir-value">3 Positions</span>
+        </div>
+        <div class="cta-info-row">
+          <span class="cir-label">Appointment</span>
+          <span class="cir-value">Permanent</span>
+        </div>
+        <div class="cta-info-row">
+          <span class="cir-label">Travel Required</span>
+          <span class="cir-value c-amber">25% or less</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK STATS -->
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hs-label">Pay Grade</div>
+      <div class="hs-value accent">GS-13/14</div>
+      <div class="hs-sub">Step 1–10</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-label">Location</div>
+      <div class="hs-value">Washington, D.C.</div>
+      <div class="hs-sub">Remote Optional</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-label">Schedule</div>
+      <div class="hs-value">Full-Time</div>
+      <div class="hs-sub">Mon–Fri</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-label">Series</div>
+      <div class="hs-value">2210</div>
+      <div class="hs-sub">IT Management</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-label">Job ID</div>
+      <div class="hs-value">FW-2025-11842</div>
+      <div class="hs-sub">USAJOBS Ref</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-label">Department</div>
+      <div class="hs-value">DHS / CISA</div>
+      <div class="hs-sub">Est. 2018</div>
+    </div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="body-layout">
+
+  <!-- MAIN COLUMN -->
+  <main class="main-col">
+
+    <!-- Quick Overview Cards -->
+    <div class="section-block">
+      <div class="section-title">Role Overview</div>
+      <div class="overview-grid">
+        <div class="overview-card">
+          <div class="oc-label">Position Type</div>
+          <div class="oc-value">Supervisory</div>
+          <div class="oc-sub">Manages 6–12 analysts</div>
+        </div>
+        <div class="overview-card">
+          <div class="oc-label">Work Arrangement</div>
+          <div class="oc-value">Hybrid / Remote</div>
+          <div class="oc-sub">D.C. HQ or remote</div>
+        </div>
+        <div class="overview-card">
+          <div class="oc-label">Clearance Required</div>
+          <div class="oc-value" style="color:var(--amber);">TS/SCI</div>
+          <div class="oc-sub">Must hold at time of apply</div>
+        </div>
+        <div class="overview-card">
+          <div class="oc-label">Drug Test Required</div>
+          <div class="oc-value">Yes</div>
+          <div class="oc-sub">Pre-employment & random</div>
+        </div>
+        <div class="overview-card">
+          <div class="oc-label">Relocation</div>
+          <div class="oc-value" style="color:var(--sage);">May Be Authorized</div>
+          <div class="oc-sub">Case-by-case basis</div>
+        </div>
+        <div class="overview-card">
+          <div class="oc-label">Probationary Period</div>
+          <div class="oc-value">1 Year</div>
+          <div class="oc-sub">Standard federal requirement</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="section-block">
+      <div class="section-title">Position Summary</div>
+      <div class="prose">
+        <p>The Cybersecurity and Infrastructure Security Agency (CISA) is seeking a highly qualified <strong>Supervisory Cybersecurity Analyst</strong> to lead threat intelligence operations within the National Cyber Threat Operations Center. You will manage a team of analysts responsible for identifying, tracking, and neutralizing advanced persistent threats targeting critical U.S. infrastructure sectors.</p>
+        <p>This is a leadership-critical position operating at the intersection of federal cyber defense, inter-agency coordination, and national security policy. The ideal candidate brings deep technical expertise in threat intelligence platforms, a proven track record managing analyst teams, and the ability to brief senior government officials on complex threat landscapes.</p>
+      </div>
+    </div>
+
+    <!-- Key Duties -->
+    <div class="section-block">
+      <div class="section-title">Key Duties & Responsibilities</div>
+      <div class="duty-list">
+        <div class="duty-item">
+          <div class="duty-num">01</div>
+          <div class="duty-text"><strong>Team Leadership</strong>Supervise, mentor, and develop a team of 6–12 cyber threat intelligence analysts. Assign workloads, conduct performance evaluations, and foster a culture of continuous learning and excellence.</div>
+        </div>
+        <div class="duty-item">
+          <div class="duty-num">02</div>
+          <div class="duty-text"><strong>Threat Intelligence Operations</strong>Oversee the collection, analysis, and dissemination of actionable threat intelligence regarding APTs, ransomware groups, and state-sponsored cyber actors targeting U.S. critical infrastructure sectors.</div>
+        </div>
+        <div class="duty-item">
+          <div class="duty-num">03</div>
+          <div class="duty-text"><strong>Inter-Agency Coordination</strong>Serve as primary liaison with NSA, FBI Cyber Division, and sector-specific ISACs. Coordinate intelligence sharing under established frameworks including ISA, EO 14028, and M-21-31.</div>
+        </div>
+        <div class="duty-item">
+          <div class="duty-num">04</div>
+          <div class="duty-text"><strong>Briefings & Reporting</strong>Prepare and deliver regular threat briefings to senior CISA leadership, DHS Secretary staff, and Congressional liaison offices. Produce classified and unclassified intelligence products and advisories.</div>
+        </div>
+        <div class="duty-item">
+          <div class="duty-num">05</div>
+          <div class="duty-text"><strong>Platform & Tool Management</strong>Manage and optimize threat intelligence platforms (TIPs), SIEM environments, and threat hunting infrastructure. Evaluate and recommend new technologies to enhance analytical capabilities.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Requirements -->
+    <div class="section-block">
+      <div class="section-title"><span class="section-title-accent">Qualifications</span> & Requirements</div>
+
+      <div class="req-block required">
+        <div class="req-tag rt-req">Required</div>
+        <h4>Specialized Experience (GS-13: 1 year at GS-12)</h4>
+        <p>At least one year of specialized experience at the GS-12 level (or equivalent) managing or leading a team conducting cyber threat intelligence analysis, incident response, or information security operations in a federal, military, or equivalent environment.</p>
+      </div>
+      <div class="req-block required">
+        <div class="req-tag rt-req">Required</div>
+        <h4>Active TS/SCI Security Clearance</h4>
+        <p>Applicants must possess a current Top Secret security clearance with Sensitive Compartmented Information (SCI) eligibility at the time of application. Clearance must remain active throughout employment.</p>
+      </div>
+      <div class="req-block required">
+        <div class="req-tag rt-req">Required</div>
+        <h4>U.S. Citizenship</h4>
+        <p>This position is open to U.S. citizens only. Dual citizenship may be a disqualifying factor depending on the countries involved. Contact HR for guidance before applying.</p>
+      </div>
+      <div class="req-block preferred">
+        <div class="req-tag rt-pref">Preferred</div>
+        <h4>Relevant Certifications</h4>
+        <p>CISSP, GCIA, GCTI, CISM, or equivalent professional certifications are strongly preferred. Demonstrated proficiency with MITRE ATT&CK, STIX/TAXII, and enterprise TIP platforms (Recorded Future, Mandiant Advantage, etc.).</p>
+      </div>
+      <div class="req-block preferred">
+        <div class="req-tag rt-pref">Preferred</div>
+        <h4>Supervisory Experience</h4>
+        <p>Prior federal supervisory experience or equivalent leadership of an intelligence analysis team. Completion of an OPM-approved supervisory training program preferred within 12 months of placement.</p>
+      </div>
+    </div>
+
+    <!-- Benefits -->
+    <div class="section-block">
+      <div class="section-title">Benefits & Compensation</div>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon bi-sage">🏥</div>
+          <div class="benefit-info">
+            <div class="benefit-name">Federal Health Insurance (FEHB)</div>
+            <div class="benefit-desc">300+ plan options. Government pays ~70% of premium for most plans.</div>
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon bi-slate">🏛️</div>
+          <div class="benefit-info">
+            <div class="benefit-name">FERS Retirement Pension</div>
+            <div class="benefit-desc">Defined benefit pension + Social Security + Thrift Savings Plan (TSP).</div>
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon bi-terra">💰</div>
+          <div class="benefit-info">
+            <div class="benefit-name">Thrift Savings Plan (TSP)</div>
+            <div class="benefit-desc">5% automatic employer match. Equivalent to 401(k). Tax-advantaged.</div>
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon bi-amber">🏖️</div>
+          <div class="benefit-info">
+            <div class="benefit-name">13–26 Days Annual Leave</div>
+            <div class="benefit-desc">Based on years of service. Plus 13 sick days and 11 federal holidays.</div>
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon bi-sky">👶</div>
+          <div class="benefit-info">
+            <div class="benefit-name">Paid Family & Parental Leave</div>
+            <div class="benefit-desc">12 weeks paid parental leave. Federal family care programs available.</div>
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon bi-violet">📚</div>
+          <div class="benefit-info">
+            <div class="benefit-name">Training & Development</div>
+            <div class="benefit-desc">Annual training budget. Tuition assistance. CISA-funded certifications.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Share row -->
+    <div class="share-row">
+      <span>Share this opportunity:</span>
+      <button class="share-btn">✉ Email</button>
+      <button class="share-btn">in LinkedIn</button>
+      <button class="share-btn">⧉ Copy Link</button>
+    </div>
+
+  </main>
+
+  <!-- STICKY SIDEBAR -->
+  <aside class="side-col">
+    <div class="sticky-side">
+
+      <!-- Application Steps -->
+      <div class="side-card">
+        <div class="side-card-title">How to Apply</div>
+        <div class="app-step">
+          <div class="step-num done">✓</div>
+          <div class="step-info">
+            <div class="step-name">Create a Profile</div>
+            <div class="step-desc">Set up your FederalWork account with your resume.</div>
+          </div>
+        </div>
+        <div class="app-step">
+          <div class="step-num active">2</div>
+          <div class="step-info">
+            <div class="step-name">Submit Application</div>
+            <div class="step-desc">Answer eligibility questions and attach resume + documents.</div>
+          </div>
+        </div>
+        <div class="app-step">
+          <div class="step-num">3</div>
+          <div class="step-info">
+            <div class="step-name">Assessment / Test</div>
+            <div class="step-desc">Complete occupational questionnaire online.</div>
+          </div>
+        </div>
+        <div class="app-step">
+          <div class="step-num">4</div>
+          <div class="step-info">
+            <div class="step-name">Referral & Interview</div>
+            <div class="step-desc">HR refers best-qualified candidates to hiring panel.</div>
+          </div>
+        </div>
+        <div class="app-step">
+          <div class="step-num">5</div>
+          <div class="step-info">
+            <div class="step-name">Tentative Offer</div>
+            <div class="step-desc">Background check, medical, and security verification begin.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Job Alert -->
+      <div class="alert-card">
+        <h4>Get Similar Job Alerts</h4>
+        <p>Be first to know when new Cybersecurity roles at DHS or CISA are posted.</p>
+        <input class="alert-input" type="email" placeholder="Enter your email...">
+        <button class="alert-btn">Create Alert →</button>
+      </div>
+
+      <!-- Similar Jobs -->
+      <div class="side-card">
+        <div class="side-card-title">Similar Roles</div>
+        <div class="similar-job">
+          <div class="sj-agency">NSA</div>
+          <div class="sj-title">Computer Network Defense Analyst</div>
+          <div class="sj-meta"><span>Fort Meade, MD</span><span class="sj-grade">GS-11/12</span></div>
+        </div>
+        <div class="similar-job">
+          <div class="sj-agency">FBI Cyber Division</div>
+          <div class="sj-title">Supervisory Special Agent — Cyber Ops</div>
+          <div class="sj-meta"><span>Washington, D.C.</span><span class="sj-grade">GS-14/15</span></div>
+        </div>
+        <div class="similar-job">
+          <div class="sj-agency">Dept. of Defense / DISA</div>
+          <div class="sj-title">Cybersecurity Analyst — Zero Trust</div>
+          <div class="sj-meta"><span>Remote eligible</span><span class="sj-grade">GS-12/13</span></div>
+        </div>
+        <div class="similar-job">
+          <div class="sj-agency">Treasury / FinCEN</div>
+          <div class="sj-title">Senior Cyber Policy Analyst</div>
+          <div class="sj-meta"><span>Washington, D.C.</span><span class="sj-grade">GS-13</span></div>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Splash Page</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:         #F4F1EC;
+  --slate:      #1B3A4B;
+  --slate-mid:  #2A5068;
+  --slate-lt:   #3D6E88;
+  --terra:      #C4622D;
+  --terra-lt:   #E8875A;
+  --terra-pale: #FBE8DC;
+  --border:     #D8D2C8;
+  --border-dk:  #BFB8AC;
+  --muted:      #7A7A7A;
+  --ink:        #1A1A1A;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--slate);
+  color: #fff;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── SCAN LINE ── */
+.scan {
+  position: fixed;
+  top: -2px; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--terra), var(--terra-lt), var(--terra), transparent);
+  animation: scanDown 3s ease-out forwards;
+  z-index: 100;
+  opacity: 0.9;
+}
+@keyframes scanDown {
+  0%   { top: -2px; opacity: 1; }
+  85%  { opacity: 0.6; }
+  100% { top: 100vh; opacity: 0; }
+}
+
+/* ── GRID OVERLAY ── */
+.grid-bg {
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(196,98,45,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(196,98,45,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── AMBIENT GLOWS ── */
+.glow-a {
+  position: fixed;
+  right: -120px; top: -120px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(196,98,45,0.1) 0%, transparent 65%);
+  pointer-events: none; z-index: 0;
+  animation: glowPulse 6s ease-in-out infinite;
+}
+.glow-b {
+  position: fixed;
+  left: -100px; bottom: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(30,111,166,0.07) 0%, transparent 65%);
+  pointer-events: none; z-index: 0;
+}
+@keyframes glowPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.75; }
+}
+
+/* ── SECURITY BAR — top ── */
+.sec-bar {
+  position: relative; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  animation: fadeIn 0.6s 0.2s ease both;
+}
+.sec-bar-left {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 10px; font-weight: 700;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase; letter-spacing: 2px;
+}
+.sec-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--terra-lt);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.4)} }
+.sec-bar-right {
+  font-size: 10px; color: rgba(255,255,255,0.2);
+  letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600;
+}
+
+/* ── MAIN STAGE ── */
+.stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative; z-index: 1;
+  padding: 0 48px;
+  text-align: center;
+}
+
+/* ── LOGO MARK ── */
+.logo-wrap {
+  margin-bottom: 32px;
+  animation: logoIn 0.9s 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes logoIn {
+  from { opacity: 0; transform: scale(0.6) rotate(-20deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+.logo-hex {
+  width: 72px; height: 72px;
+  background: var(--terra);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px; color: #fff;
+  margin: 0 auto 14px;
+  position: relative;
+  transition: transform 0.3s;
+  box-shadow: 0 0 0 4px rgba(196,98,45,0.2), 0 0 0 8px rgba(196,98,45,0.08);
+}
+.logo-hex:hover { transform: scale(1.06); }
+/* outer ring */
+.logo-hex::before {
+  content: '';
+  position: absolute; inset: -8px;
+  border-radius: 50%;
+  background: rgba(196,98,45,0.15);
+  animation: ringPulse 2.5s 1.3s ease both;
+}
+@keyframes ringPulse {
+  0% { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.4); }
+}
+.logo-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px; color: #fff; letter-spacing: 0.5px;
+}
+.logo-name span { color: var(--terra-lt); }
+
+/* ── EYEBROW ── */
+.eyebrow {
+  font-size: 10px; font-weight: 700; color: var(--terra-lt);
+  text-transform: uppercase; letter-spacing: 4px;
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+  animation: fadeUp 0.7s 0.9s ease both;
+}
+.eyebrow::before, .eyebrow::after {
+  content: ''; display: block; width: 32px; height: 1px; background: var(--terra-lt); opacity: 0.6;
+}
+
+/* ── HEADLINE ── */
+.headline {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+  max-width: 760px;
+  animation: fadeUp 0.8s 1.05s ease both;
+}
+.headline em {
+  color: var(--terra-lt);
+  font-style: italic;
+}
+
+/* ── SUBTEXT ── */
+.subtext {
+  font-size: 15px; font-weight: 400;
+  color: rgba(255,255,255,0.45);
+  max-width: 460px;
+  line-height: 1.75;
+  margin-bottom: 44px;
+  animation: fadeUp 0.7s 1.2s ease both;
+}
+
+/* ── CTA BUTTONS ── */
+.cta-row {
+  display: flex; gap: 12px; align-items: center;
+  animation: fadeUp 0.7s 1.35s ease both;
+  margin-bottom: 52px;
+}
+.btn-primary {
+  padding: 14px 36px;
+  background: var(--terra); color: #fff; border: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-primary:hover { background: var(--terra-lt); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196,98,45,0.35); }
+.btn-ghost {
+  padding: 13px 32px;
+  border: 1px solid rgba(255,255,255,0.3); color: #fff;
+  background: transparent;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+.btn-text {
+  font-size: 12px; color: rgba(255,255,255,0.35);
+  background: none; border: none; cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: color 0.2s; font-weight: 500;
+  padding: 13px 8px;
+}
+.btn-text:hover { color: rgba(255,255,255,0.7); }
+
+/* ── TRUST STRIP ── */
+.trust-strip {
+  display: flex; align-items: center; gap: 28px;
+  animation: fadeUp 0.6s 1.5s ease both;
+}
+.trust-div {
+  width: 1px; height: 28px;
+  background: rgba(255,255,255,0.1);
+}
+.trust-item {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+}
+.trust-n {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px; color: var(--terra-lt); line-height: 1;
+}
+.trust-l {
+  font-size: 9px; color: rgba(255,255,255,0.3);
+  text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;
+}
+
+/* ── BOTTOM BAR ── */
+.bottom-bar {
+  position: relative; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 48px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  animation: fadeIn 0.6s 1.6s ease both;
+}
+.bottom-links { display: flex; gap: 24px; }
+.bottom-links a {
+  font-size: 11px; color: rgba(255,255,255,0.25);
+  text-decoration: none; transition: color 0.2s; font-weight: 500;
+}
+.bottom-links a:hover { color: rgba(255,255,255,0.55); }
+.bottom-copy { font-size: 11px; color: rgba(255,255,255,0.18); }
+
+/* ── TERRA ACCENT LINE (left edge) ── */
+.accent-line {
+  position: fixed; left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, transparent 0%, var(--terra) 30%, var(--terra-lt) 60%, transparent 100%);
+  z-index: 5;
+  animation: lineIn 1.2s 0.6s ease both;
+}
+@keyframes lineIn {
+  from { opacity: 0; transform: scaleY(0); transform-origin: top; }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+/* ── SHARED ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<div class="scan"></div>
+<div class="grid-bg"></div>
+<div class="glow-a"></div>
+<div class="glow-b"></div>
+<div class="accent-line"></div>
+
+<!-- TOP BAR -->
+<div class="sec-bar">
+  <div class="sec-bar-left">
+    <div class="sec-dot"></div>
+    Government Intranet · Authorized Users Only
+  </div>
+  <div class="sec-bar-right">icjobs.gov · EST. 2024</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="stage">
+
+  <!-- Logo -->
+  <div class="logo-wrap">
+    <div class="logo-hex">IC</div>
+    <div class="logo-name">IC<span>Jobs</span></div>
+  </div>
+
+  <!-- Eyebrow -->
+  <div class="eyebrow">Federal Employee Portal</div>
+
+  <!-- Headline -->
+  <h1 class="headline">
+    Advance your career.<br><em>Stay in service.</em>
+  </h1>
+
+  <!-- Sub -->
+  <p class="subtext">
+    The internal mobility platform for federal employees. Transfer laterally, advance in grade, and find your next role — across every agency, without leaving government service.
+  </p>
+
+  <!-- CTAs -->
+  <div class="cta-row">
+    <button class="btn-primary" onclick="window.location.href='#'">Sign In with PIV / CAC</button>
+    <button class="btn-ghost" onclick="window.location.href='#'">Create Account</button>
+    <button class="btn-text" onclick="window.location.href='#'">Browse open positions →</button>
+  </div>
+
+  <!-- Trust strip -->
+  <div class="trust-strip">
+    <div class="trust-item">
+      <div class="trust-n">47,200+</div>
+      <div class="trust-l">Open Positions</div>
+    </div>
+    <div class="trust-div"></div>
+    <div class="trust-item">
+      <div class="trust-n">138</div>
+      <div class="trust-l">Federal Agencies</div>
+    </div>
+    <div class="trust-div"></div>
+    <div class="trust-item">
+      <div class="trust-n">12,400+</div>
+      <div class="trust-l">Cleared Roles</div>
+    </div>
+    <div class="trust-div"></div>
+    <div class="trust-item">
+      <div class="trust-n">Gov. Only</div>
+      <div class="trust-l">Authorized Access</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM BAR -->
+<div class="bottom-bar">
+  <div class="bottom-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Use</a>
+    <a href="#">Accessibility</a>
+    <a href="#">Help Desk</a>
+  </div>
+  <div class="bottom-copy">For authorized U.S. Government employees only. Unauthorized access is prohibited.</div>
+</div>
+
+</body>
+</html>

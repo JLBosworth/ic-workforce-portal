@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FederalWork — Search Results</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #F4F1EC;
+    --bg-white:  #FDFCFA;
+    --bg-panel:  #EEEAE2;
+    --slate:     #1B3A4B;
+    --slate-mid: #2A5068;
+    --slate-light:#3D6E88;
+    --terra:     #C4622D;
+    --terra-lt:  #E8875A;
+    --terra-pale:#FBE8DC;
+    --sage:      #3A6B4C;
+    --sage-lt:   #4E8E63;
+    --sage-pale: #DAF0E3;
+    --sky:       #1E6FA6;
+    --sky-pale:  #D6EDFB;
+    --amber:     #B87A1A;
+    --amber-pale:#FEF3D7;
+    --violet:    #5C3D8F;
+    --violet-pale:#EDE6F9;
+    --red:       #C13030;
+    --red-pale:  #FDEAEA;
+    --ink:       #1A1A1A;
+    --ink-mid:   #3E3E3E;
+    --muted:     #7A7A7A;
+    --border:    #D8D2C8;
+    --border-dk: #BFB8AC;
+    --white:     #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; gap: 24px;
+    padding: 14px 48px;
+    background: var(--slate);
+    box-shadow: 0 2px 16px rgba(27,58,75,0.18);
+  }
+
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+  .logo-mark {
+    width: 32px; height: 32px;
+    background: var(--terra);
+    clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif; font-size: 13px; font-weight: 700; color: #fff;
+  }
+  .logo-text { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .logo-text span { color: var(--terra-lt); }
+
+  .nav-search {
+    flex: 1; max-width: 580px;
+    display: flex; align-items: stretch;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    height: 42px;
+  }
+  .nav-search-field {
+    flex: 1; display: flex; align-items: center;
+    padding: 0 14px; gap: 8px;
+    border-right: 1px solid rgba(255,255,255,0.15);
+  }
+  .nav-search-field svg { color: rgba(255,255,255,0.5); flex-shrink: 0; }
+  .nav-search-field input {
+    flex: 1; background: none; border: none; outline: none;
+    color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px;
+  }
+  .nav-search-field input::placeholder { color: rgba(255,255,255,0.45); }
+  .nav-search-loc {
+    display: flex; align-items: center; padding: 0 14px; gap: 8px;
+  }
+  .nav-search-loc svg { color: rgba(255,255,255,0.5); flex-shrink: 0; }
+  .nav-search-loc input {
+    width: 130px; background: none; border: none; outline: none;
+    color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px;
+  }
+  .nav-search-loc input::placeholder { color: rgba(255,255,255,0.45); }
+  .nav-search-btn {
+    padding: 0 22px; background: var(--terra); color: #fff;
+    border: none; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px; font-weight: 700; cursor: pointer;
+    text-transform: uppercase; letter-spacing: 0.8px; transition: background 0.2s;
+  }
+  .nav-search-btn:hover { background: var(--terra-lt); }
+
+  .nav-links { display: flex; gap: 28px; margin-left: auto; }
+  .nav-links a {
+    color: rgba(255,255,255,0.65); font-size: 13px; font-weight: 500;
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: #fff; }
+
+  .nav-actions { display: flex; gap: 10px; align-items: center; }
+  .btn-outline {
+    padding: 8px 18px; border: 1px solid rgba(255,255,255,0.35); color: #fff;
+    background: transparent; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); }
+  .btn-solid {
+    padding: 8px 18px; background: var(--terra); color: #fff;
+    border: none; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s;
+  }
+  .btn-solid:hover { background: var(--terra-lt); }
+
+  /* ─── RESULTS HEADER BAR ─── */
+  .results-bar {
+    background: var(--bg-white);
+    border-bottom: 2px solid var(--border);
+    padding: 16px 48px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .results-count { display: flex; align-items: baseline; gap: 10px; }
+  .results-count strong {
+    font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700; color: var(--terra);
+  }
+  .results-count span { font-size: 14px; color: var(--muted); }
+  .results-count em { color: var(--ink); font-style: normal; font-weight: 600; }
+
+  .results-controls { display: flex; gap: 12px; align-items: center; }
+  .sort-label { font-size: 12px; color: var(--muted); font-weight: 600; }
+  .sort-select {
+    background: var(--bg-white); border: 1px solid var(--border-dk);
+    color: var(--ink); padding: 7px 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; cursor: pointer; outline: none;
+  }
+  .view-toggle { display: flex; border: 1px solid var(--border-dk); overflow: hidden; }
+  .view-btn {
+    width: 36px; height: 34px; display: flex; align-items: center; justify-content: center;
+    background: transparent; border: none; color: var(--muted); cursor: pointer; transition: all 0.2s;
+  }
+  .view-btn.active { background: var(--slate); color: #fff; }
+
+  /* ─── ACTIVE FILTERS ─── */
+  .active-filters {
+    padding: 12px 48px;
+    background: var(--bg-white);
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  }
+  .filter-label { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-right: 2px; }
+  .filter-chip {
+    display: flex; align-items: center; gap: 6px;
+    padding: 4px 12px;
+    font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+  }
+  .filter-chip.c-slate  { background: #E0EBF1; color: var(--slate); border: 1px solid #B3CFDC; }
+  .filter-chip.c-terra  { background: var(--terra-pale); color: var(--terra); border: 1px solid #F0C1A8; }
+  .filter-chip.c-sage   { background: var(--sage-pale); color: var(--sage); border: 1px solid #A8D8B6; }
+  .filter-chip.c-sky    { background: var(--sky-pale); color: var(--sky); border: 1px solid #8EC9EC; }
+  .filter-chip .chip-x  { font-size: 15px; line-height: 1; opacity: 0.7; }
+  .clear-all { font-size: 12px; color: var(--red); cursor: pointer; margin-left: 6px; font-weight: 600; transition: opacity 0.2s; }
+  .clear-all:hover { opacity: 0.7; }
+
+  /* ─── LAYOUT ─── */
+  .page-layout {
+    display: grid; grid-template-columns: 272px 1fr;
+    min-height: calc(100vh - 120px);
+  }
+
+  /* ─── SIDEBAR ─── */
+  .filters-panel {
+    border-right: 1px solid var(--border);
+    background: var(--bg-white);
+    padding: 24px 20px;
+    position: sticky; top: 62px;
+    height: calc(100vh - 62px);
+    overflow-y: auto;
+  }
+  .filters-panel::-webkit-scrollbar { width: 4px; }
+  .filters-panel::-webkit-scrollbar-thumb { background: var(--border-dk); border-radius: 2px; }
+
+  .filter-section { margin-bottom: 26px; }
+  .filter-section-title {
+    font-size: 10px; font-weight: 800; color: var(--slate);
+    text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--slate);
+  }
+  .filter-section-title button {
+    font-size: 10px; color: var(--terra); background: none; border: none;
+    cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700; transition: opacity 0.2s;
+  }
+  .filter-section-title button:hover { opacity: 0.7; }
+  .filter-divider { width: 100%; height: 1px; background: var(--border); margin-bottom: 26px; }
+
+  .filter-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 0; cursor: pointer;
+  }
+  .filter-item:hover .filter-item-label { color: var(--slate); }
+
+  .filter-checkbox {
+    width: 16px; height: 16px; flex-shrink: 0;
+    border: 2px solid var(--border-dk); background: transparent;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; border-radius: 2px;
+  }
+  .filter-checkbox.checked { background: var(--slate); border-color: var(--slate); }
+  .filter-checkbox.checked::after { content: '✓'; font-size: 10px; color: #fff; font-weight: 800; }
+  .filter-item-label { font-size: 13px; color: var(--ink-mid); flex: 1; transition: color 0.2s; }
+  .filter-item-count {
+    font-size: 11px; color: var(--muted);
+    background: var(--bg-panel); padding: 1px 7px; border-radius: 10px;
+    font-weight: 600;
+  }
+
+  .range-track { height: 4px; background: var(--border-dk); position: relative; margin: 16px 0 10px; border-radius: 2px; }
+  .range-fill { position: absolute; left: 20%; right: 15%; height: 100%; background: var(--slate); border-radius: 2px; }
+  .range-thumb {
+    position: absolute; width: 14px; height: 14px;
+    background: var(--white); border: 3px solid var(--slate);
+    border-radius: 50%; top: -5px; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  .range-thumb.left { left: calc(20% - 7px); }
+  .range-thumb.right { right: calc(15% - 7px); }
+  .range-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); font-weight: 500; }
+
+  .grade-grid { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+  .grade-pill {
+    padding: 4px 10px; border: 1.5px solid var(--border-dk);
+    font-size: 11px; color: var(--muted); cursor: pointer;
+    transition: all 0.2s; font-weight: 600; border-radius: 2px;
+  }
+  .grade-pill:hover { border-color: var(--slate); color: var(--slate); }
+  .grade-pill.selected { background: var(--slate); border-color: var(--slate); color: #fff; }
+
+  /* ─── RESULTS ─── */
+  .results-column { padding: 24px 36px; }
+
+  /* Featured banner */
+  .featured-banner {
+    background: linear-gradient(135deg, var(--slate) 0%, var(--slate-mid) 100%);
+    padding: 20px 28px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    position: relative; overflow: hidden;
+  }
+  .featured-banner::before {
+    content: '';
+    position: absolute; right: -40px; top: -40px;
+    width: 160px; height: 160px;
+    background: rgba(196,98,45,0.15);
+    border-radius: 50%;
+  }
+  .featured-tag {
+    font-size: 10px; font-weight: 800; color: var(--terra-lt);
+    text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px;
+  }
+  .featured-banner h4 { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 600; color: #fff; }
+  .featured-banner p { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 4px; }
+  .featured-banner-btn {
+    flex-shrink: 0; padding: 9px 22px;
+    background: var(--terra); color: #fff;
+    border: none; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px; font-weight: 700; cursor: pointer;
+    text-transform: uppercase; letter-spacing: 0.5px; transition: background 0.2s;
+  }
+  .featured-banner-btn:hover { background: var(--terra-lt); }
+
+  /* Job cards */
+  .job-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-left: 4px solid transparent;
+    padding: 24px 28px;
+    margin-bottom: 10px;
+    cursor: pointer; position: relative;
+    transition: all 0.2s;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 20px; align-items: start;
+  }
+  .job-card:hover {
+    border-color: var(--slate);
+    border-left-color: var(--terra);
+    box-shadow: 0 4px 20px rgba(27,58,75,0.1);
+    transform: translateY(-1px);
+  }
+
+  /* Accent color per agency type */
+  .job-card.color-terra  { border-left-color: var(--terra); }
+  .job-card.color-slate  { border-left-color: var(--slate); }
+  .job-card.color-sage   { border-left-color: var(--sage-lt); }
+  .job-card.color-sky    { border-left-color: var(--sky); }
+  .job-card.color-violet { border-left-color: var(--violet); }
+  .job-card.color-amber  { border-left-color: var(--amber); }
+
+  .card-agency-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+
+  .agency-seal {
+    width: 34px; height: 34px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800; border-radius: 4px;
+  }
+  .seal-terra  { background: var(--terra-pale); color: var(--terra); }
+  .seal-slate  { background: #D8E8F0; color: var(--slate); }
+  .seal-sage   { background: var(--sage-pale); color: var(--sage); }
+  .seal-sky    { background: var(--sky-pale); color: var(--sky); }
+  .seal-violet { background: var(--violet-pale); color: var(--violet); }
+  .seal-amber  { background: var(--amber-pale); color: var(--amber); }
+
+  .card-agency { font-size: 11px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 1.2px; }
+  .card-sub-agency { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+  .card-title {
+    font-family: 'Fraunces', serif;
+    font-size: 19px; font-weight: 700; line-height: 1.25;
+    color: var(--ink); margin-bottom: 12px; transition: color 0.2s;
+  }
+  .job-card:hover .card-title { color: var(--slate); }
+
+  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .card-tag {
+    font-size: 11px; padding: 3px 10px; font-weight: 600; border-radius: 2px;
+  }
+  .tag-hot     { background: var(--terra-pale); color: var(--terra); border: 1px solid #F0C1A8; }
+  .tag-clear   { background: var(--amber-pale); color: var(--amber); border: 1px solid #F0D89A; }
+  .tag-remote  { background: var(--sage-pale); color: var(--sage); border: 1px solid #A8D8B6; }
+  .tag-new     { background: var(--slate); color: #fff; border: none; }
+  .tag-direct  { background: var(--sky-pale); color: var(--sky); border: 1px solid #8EC9EC; }
+  .tag-multi   { background: var(--violet-pale); color: var(--violet); border: 1px solid #C3ABEA; }
+  .tag-neutral { background: var(--bg-panel); color: var(--muted); border: 1px solid var(--border-dk); }
+
+  .card-meta { display: flex; flex-wrap: wrap; gap: 16px; }
+  .card-meta-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--muted); }
+  .card-meta-item svg { flex-shrink: 0; }
+
+  .card-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+  .card-grade {
+    font-family: 'Fraunces', serif;
+    font-size: 21px; font-weight: 700; color: var(--slate);
+    line-height: 1;
+  }
+  .card-grade-label { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-top: 1px; }
+  .card-salary { font-size: 13px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+  .card-salary-label { font-size: 10px; color: var(--muted); display: block; text-align: right; }
+
+  .card-deadline { font-size: 11px; color: var(--muted); font-weight: 500; }
+  .card-deadline.urgent {
+    color: var(--red); font-weight: 700;
+    background: var(--red-pale); padding: 3px 8px; border-radius: 2px;
+  }
+
+  .save-btn {
+    width: 32px; height: 32px;
+    border: 1.5px solid var(--border-dk);
+    background: transparent; color: var(--muted);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s; font-size: 15px;
+    border-radius: 2px;
+  }
+  .save-btn:hover { border-color: var(--terra); color: var(--terra); }
+  .save-btn.active { background: var(--terra-pale); border-color: var(--terra); color: var(--terra); }
+
+  .apply-btn {
+    padding: 8px 18px;
+    background: var(--slate); color: #fff;
+    border: none; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px; font-weight: 700; cursor: pointer;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    transition: all 0.2s; white-space: nowrap; border-radius: 2px;
+  }
+  .apply-btn:hover { background: var(--terra); }
+
+  /* Applicant bar */
+  .applicant-bar {
+    width: 80px;
+  }
+  .applicant-track { height: 3px; background: var(--border-dk); border-radius: 2px; overflow: hidden; }
+  .applicant-fill { height: 100%; background: var(--sage-lt); border-radius: 2px; }
+  .applicant-label { font-size: 10px; color: var(--muted); margin-top: 4px; font-weight: 600; text-align: right; }
+
+  /* Info stripe on saved card */
+  .saved-stripe {
+    position: absolute; top: 0; right: 0;
+    background: var(--terra); color: #fff;
+    font-size: 9px; font-weight: 800; letter-spacing: 1px;
+    padding: 3px 10px; text-transform: uppercase;
+  }
+
+  /* Pagination */
+  .pagination {
+    display: flex; justify-content: center; align-items: center;
+    gap: 5px; padding: 36px 0 16px;
+  }
+  .page-btn {
+    width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+    border: 1.5px solid var(--border-dk); background: var(--bg-white);
+    color: var(--muted); font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; border-radius: 2px;
+  }
+  .page-btn:hover { border-color: var(--slate); color: var(--slate); background: #EFF5F9; }
+  .page-btn.active { background: var(--slate); border-color: var(--slate); color: #fff; }
+  .page-ellipsis { color: var(--muted); padding: 0 4px; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border-dk); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--slate-light); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="logo-mark">F</div>
+    <div class="logo-text">Federal<span>Work</span></div>
+  </a>
+
+  <div class="nav-search">
+    <div class="nav-search-field">
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" value="Cybersecurity Analyst" placeholder="Job title, keyword...">
+    </div>
+    <div class="nav-search-loc">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+      </svg>
+      <input type="text" value="Washington, D.C." placeholder="Location...">
+    </div>
+    <button class="nav-search-btn">Search</button>
+  </div>
+
+  <div class="nav-links">
+    <a href="#">Find Jobs</a>
+    <a href="#">Veterans</a>
+    <a href="#">Agencies</a>
+    <a href="#">Resources</a>
+  </div>
+
+  <div class="nav-actions">
+    <button class="btn-outline">Sign In</button>
+    <button class="btn-solid">Create Profile</button>
+  </div>
+</nav>
+
+<!-- RESULTS BAR -->
+<div class="results-bar">
+  <div class="results-count">
+    <strong>3,842</strong>
+    <span>results for <em>"Cybersecurity Analyst"</em> · Washington, D.C.</span>
+  </div>
+  <div class="results-controls">
+    <span class="sort-label">Sort by</span>
+    <select class="sort-select">
+      <option>Relevance</option>
+      <option>Closing Date</option>
+      <option>Pay Grade (High → Low)</option>
+      <option>Recently Posted</option>
+    </select>
+    <div class="view-toggle">
+      <button class="view-btn active" title="List">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+      </button>
+      <button class="view-btn" title="Grid">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVE FILTERS -->
+<div class="active-filters">
+  <span class="filter-label">Active Filters:</span>
+  <div class="filter-chip c-slate">Full-Time <span class="chip-x">×</span></div>
+  <div class="filter-chip c-terra">Washington D.C. <span class="chip-x">×</span></div>
+  <div class="filter-chip c-sky">GS-11 to GS-13 <span class="chip-x">×</span></div>
+  <div class="filter-chip c-sage">Remote Eligible <span class="chip-x">×</span></div>
+  <span class="clear-all">✕ Clear all</span>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="page-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="filters-panel">
+
+    <div class="filter-section">
+      <div class="filter-section-title">
+        Department / Agency
+        <button>Clear</button>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox checked"></div>
+        <span class="filter-item-label">Dept. of Homeland Security</span>
+        <span class="filter-item-count">841</span>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox"></div>
+        <span class="filter-item-label">Dept. of Defense</span>
+        <span class="filter-item-count">712</span>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox"></div>
+        <span class="filter-item-label">FBI / DOJ</span>
+        <span class="filter-item-count">403</span>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox"></div>
+        <span class="filter-item-label">NSA / Intelligence</span>
+        <span class="filter-item-count">388</span>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox"></div>
+        <span class="filter-item-label">Dept. of State</span>
+        <span class="filter-item-count">201</span>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox"></div>
+        <span class="filter-item-label">Treasury / IRS</span>
+        <span class="filter-item-count">177</span>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox" style="border-color:#B3CFDC;"></div>
+        <span class="filter-item-label" style="color:var(--slate);font-weight:600;">Show all agencies +34</span>
+      </div>
+    </div>
+
+    <div class="filter-divider"></div>
+
+    <div class="filter-section">
+      <div class="filter-section-title">
+        Pay Grade (GS)
+        <button>Clear</button>
+      </div>
+      <div class="grade-grid">
+        <div class="grade-pill">GS-5</div>
+        <div class="grade-pill">GS-7</div>
+        <div class="grade-pill">GS-9</div>
+        <div class="grade-pill selected">GS-11</div>
+        <div class="grade-pill selected">GS-12</div>
+        <div class="grade-pill selected">GS-13</div>
+        <div class="grade-pill">GS-14</div>
+        <div class="grade-pill">GS-15</div>
+        <div class="grade-pill">SES</div>
+      </div>
+    </div>
+
+    <div class="filter-divider"></div>
+
+    <div class="filter-section">
+      <div class="filter-section-title">Salary Range</div>
+      <div style="margin-top:6px;">
+        <div class="range-track">
+          <div class="range-fill"></div>
+          <div class="range-thumb left"></div>
+          <div class="range-thumb right"></div>
+        </div>
+        <div class="range-labels">
+          <span>$62,000</span>
+          <span>$140,000</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-divider"></div>
+
+    <div class="filter-section">
+      <div class="filter-section-title">Work Location Type</div>
+      <div class="filter-item">
+        <div class="filter-checkbox checked"></div>
+        <span class="filter-item-label">Remote Eligible</span>
+        <span class="filter-item-count">341</span>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox"></div>
+        <span class="filter-item-label">Hybrid</span>
+        <span class="filter-item-count">980</span>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox"></div>
+        <span class="filter-item-label">On-Site Only</span>
+        <span class="filter-item-count">2,521</span>
+      </div>
+    </div>
+
+    <div class="filter-divider"></div>
+
+    <div class="filter-section">
+      <div class="filter-section-title">
+        Security Clearance
+        <button>Clear</button>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox"></div>
+        <span class="filter-item-label">Not Required</span>
+        <span class="filter-item-count">688</span>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox checked"></div>
+        <span class="filter-item-label">Secret</span>
+        <span class="filter-item-count">1,204</span>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox"></div>
+        <span class="filter-item-label">Top Secret</span>
+        <span class="filter-item-count">1,002</span>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox"></div>
+        <span class="filter-item-label">TS/SCI</span>
+        <span class="filter-item-count">594</span>
+      </div>
+    </div>
+
+    <div class="filter-divider"></div>
+
+    <div class="filter-section">
+      <div class="filter-section-title">
+        Work Schedule
+        <button>Clear</button>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox checked"></div>
+        <span class="filter-item-label">Full-Time</span>
+        <span class="filter-item-count">2,918</span>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox"></div>
+        <span class="filter-item-label">Part-Time</span>
+        <span class="filter-item-count">124</span>
+      </div>
+    </div>
+
+    <div class="filter-divider"></div>
+
+    <div class="filter-section">
+      <div class="filter-section-title">Eligibility</div>
+      <div class="filter-item">
+        <div class="filter-checkbox"></div>
+        <span class="filter-item-label">Open to Public</span>
+        <span class="filter-item-count">2,441</span>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox"></div>
+        <span class="filter-item-label">Veterans' Preference</span>
+        <span class="filter-item-count">1,800</span>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox"></div>
+        <span class="filter-item-label">Current Fed. Employees</span>
+        <span class="filter-item-count">1,200</span>
+      </div>
+      <div class="filter-item">
+        <div class="filter-checkbox"></div>
+        <span class="filter-item-label">Recent Graduates</span>
+        <span class="filter-item-count">321</span>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- RESULTS -->
+  <main class="results-column">
+
+    <!-- Featured Banner -->
+    <div class="featured-banner">
+      <div>
+        <div class="featured-tag">⚡ Featured Opportunity</div>
+        <h4>DHS is actively hiring 200+ Cybersecurity professionals this quarter</h4>
+        <p>Direct-hire authority active — streamlined application, no competitive referral required.</p>
+      </div>
+      <button class="featured-banner-btn">View DHS Openings</button>
+    </div>
+
+    <!-- CARD 1 — DHS/CISA (Terra) -->
+    <div class="job-card color-terra">
+      <div class="saved-stripe">★ Saved</div>
+      <div>
+        <div class="card-agency-row">
+          <div class="agency-seal seal-terra">DHS</div>
+          <div>
+            <div class="card-agency">Dept. of Homeland Security</div>
+            <div class="card-sub-agency">Cybersecurity & Infrastructure Security Agency (CISA)</div>
+          </div>
+        </div>
+        <div class="card-title">Supervisory Cybersecurity Analyst (Threat Intelligence)</div>
+        <div class="card-tags">
+          <span class="card-tag tag-hot">⚡ High Demand</span>
+          <span class="card-tag tag-clear">TS/SCI Required</span>
+          <span class="card-tag tag-remote">Remote Eligible</span>
+          <span class="card-tag tag-new">NEW</span>
+        </div>
+        <div class="card-meta">
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Washington, D.C. (Remote Optional)
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Posted Feb 17, 2025
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Permanent · Full-Time
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            84 applicants
+          </div>
+        </div>
+      </div>
+      <div class="card-right">
+        <button class="save-btn active">★</button>
+        <div>
+          <div class="card-grade">GS-13/14</div>
+          <span class="card-grade-label">Pay Grade</span>
+        </div>
+        <div>
+          <div class="card-salary">$112,015 – $172,075</div>
+          <span class="card-salary-label">per year</span>
+        </div>
+        <div class="applicant-bar">
+          <div class="applicant-track"><div class="applicant-fill" style="width:28%"></div></div>
+          <div class="applicant-label">Low competition</div>
+        </div>
+        <div class="card-deadline">Closes Mar 3, 2025</div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+    </div>
+
+    <!-- CARD 2 — DOD/DISA (Slate) -->
+    <div class="job-card color-slate">
+      <div>
+        <div class="card-agency-row">
+          <div class="agency-seal seal-slate">DOD</div>
+          <div>
+            <div class="card-agency">Dept. of Defense</div>
+            <div class="card-sub-agency">Defense Information Systems Agency (DISA)</div>
+          </div>
+        </div>
+        <div class="card-title">Cybersecurity Analyst — Zero Trust Architecture</div>
+        <div class="card-tags">
+          <span class="card-tag tag-clear">Secret Clearance</span>
+          <span class="card-tag tag-direct">Direct Hire Authority</span>
+          <span class="card-tag tag-neutral">Fort Meade, MD</span>
+        </div>
+        <div class="card-meta">
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Fort Meade, MD
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Posted Feb 14, 2025
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Permanent · Full-Time
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            241 applicants
+          </div>
+        </div>
+      </div>
+      <div class="card-right">
+        <button class="save-btn">☆</button>
+        <div>
+          <div class="card-grade">GS-12/13</div>
+          <span class="card-grade-label">Pay Grade</span>
+        </div>
+        <div>
+          <div class="card-salary">$91,270 – $140,713</div>
+          <span class="card-salary-label">per year</span>
+        </div>
+        <div class="applicant-bar">
+          <div class="applicant-track"><div class="applicant-fill" style="width:68%;background:var(--amber);"></div></div>
+          <div class="applicant-label">High competition</div>
+        </div>
+        <div class="card-deadline">Closes Mar 10, 2025</div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+    </div>
+
+    <!-- CARD 3 — FBI (Amber, urgent) -->
+    <div class="job-card color-amber">
+      <div>
+        <div class="card-agency-row">
+          <div class="agency-seal seal-amber">FBI</div>
+          <div>
+            <div class="card-agency">Federal Bureau of Investigation</div>
+            <div class="card-sub-agency">Cyber Division, Operations Technology Unit</div>
+          </div>
+        </div>
+        <div class="card-title">Supervisory Special Agent — Cyber Operations</div>
+        <div class="card-tags">
+          <span class="card-tag tag-clear">TS/SCI + Poly</span>
+          <span class="card-tag tag-hot">⚡ Critical Hiring</span>
+        </div>
+        <div class="card-meta">
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Washington, D.C.
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Posted Feb 10, 2025
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Permanent · Full-Time
+          </div>
+        </div>
+      </div>
+      <div class="card-right">
+        <button class="save-btn">☆</button>
+        <div>
+          <div class="card-grade">GS-14/15</div>
+          <span class="card-grade-label">Pay Grade</span>
+        </div>
+        <div>
+          <div class="card-salary">$136,908 – $183,500</div>
+          <span class="card-salary-label">per year</span>
+        </div>
+        <div class="card-deadline urgent">⚠ Closes in 3 days</div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+    </div>
+
+    <!-- CARD 4 — NSA (Violet) -->
+    <div class="job-card color-violet">
+      <div>
+        <div class="card-agency-row">
+          <div class="agency-seal seal-violet">NSA</div>
+          <div>
+            <div class="card-agency">National Security Agency</div>
+            <div class="card-sub-agency">Information Assurance Directorate</div>
+          </div>
+        </div>
+        <div class="card-title">Computer Network Defense Analyst (Entry / Mid-Level)</div>
+        <div class="card-tags">
+          <span class="card-tag tag-clear">TS/SCI Required</span>
+          <span class="card-tag tag-multi">15 Vacancies</span>
+          <span class="card-tag tag-new">NEW</span>
+        </div>
+        <div class="card-meta">
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Fort Meade, MD
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Posted Feb 18, 2025
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Permanent · Full-Time
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            62 applicants
+          </div>
+        </div>
+      </div>
+      <div class="card-right">
+        <button class="save-btn">☆</button>
+        <div>
+          <div class="card-grade">GS-11/12</div>
+          <span class="card-grade-label">Pay Grade</span>
+        </div>
+        <div>
+          <div class="card-salary">$73,572 – $114,818</div>
+          <span class="card-salary-label">per year</span>
+        </div>
+        <div class="applicant-bar">
+          <div class="applicant-track"><div class="applicant-fill" style="width:18%;"></div></div>
+          <div class="applicant-label">Low competition</div>
+        </div>
+        <div class="card-deadline">Closes Apr 1, 2025</div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+    </div>
+
+    <!-- CARD 5 — Treasury (Sky) -->
+    <div class="job-card color-sky">
+      <div>
+        <div class="card-agency-row">
+          <div class="agency-seal seal-sky">TSY</div>
+          <div>
+            <div class="card-agency">Dept. of the Treasury</div>
+            <div class="card-sub-agency">Office of Cybersecurity & Critical Infrastructure Protection</div>
+          </div>
+        </div>
+        <div class="card-title">Senior Cybersecurity Policy Analyst</div>
+        <div class="card-tags">
+          <span class="card-tag tag-neutral">Public Trust</span>
+          <span class="card-tag tag-remote">Hybrid — 3 days remote</span>
+          <span class="card-tag tag-direct">Open to Public</span>
+        </div>
+        <div class="card-meta">
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Washington, D.C. (Hybrid)
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Posted Feb 12, 2025
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Permanent · Full-Time
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            178 applicants
+          </div>
+        </div>
+      </div>
+      <div class="card-right">
+        <button class="save-btn">☆</button>
+        <div>
+          <div class="card-grade">GS-13</div>
+          <span class="card-grade-label">Pay Grade</span>
+        </div>
+        <div>
+          <div class="card-salary">$112,015 – $145,617</div>
+          <span class="card-salary-label">per year</span>
+        </div>
+        <div class="applicant-bar">
+          <div class="applicant-track"><div class="applicant-fill" style="width:52%;background:var(--amber);"></div></div>
+          <div class="applicant-label">Medium competition</div>
+        </div>
+        <div class="card-deadline">Closes Mar 22, 2025</div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+    </div>
+
+    <!-- CARD 6 — CDC/HHS (Sage) -->
+    <div class="job-card color-sage">
+      <div>
+        <div class="card-agency-row">
+          <div class="agency-seal seal-sage">CDC</div>
+          <div>
+            <div class="card-agency">HHS / Centers for Disease Control</div>
+            <div class="card-sub-agency">Office of the Chief Information Security Officer</div>
+          </div>
+        </div>
+        <div class="card-title">Information Systems Security Manager (ISSM)</div>
+        <div class="card-tags">
+          <span class="card-tag tag-neutral">Public Trust</span>
+          <span class="card-tag tag-remote">Remote — Nationwide</span>
+          <span class="card-tag tag-new">NEW</span>
+        </div>
+        <div class="card-meta">
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Remote (Atlanta, GA HQ)
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Posted Feb 19, 2025
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Permanent · Full-Time
+          </div>
+          <div class="card-meta-item">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            29 applicants
+          </div>
+        </div>
+      </div>
+      <div class="card-right">
+        <button class="save-btn">☆</button>
+        <div>
+          <div class="card-grade">GS-12/13</div>
+          <span class="card-grade-label">Pay Grade</span>
+        </div>
+        <div>
+          <div class="card-salary">$91,270 – $140,713</div>
+          <span class="card-salary-label">per year</span>
+        </div>
+        <div class="applicant-bar">
+          <div class="applicant-track"><div class="applicant-fill" style="width:10%;"></div></div>
+          <div class="applicant-label">Very low competition</div>
+        </div>
+        <div class="card-deadline">Closes Apr 14, 2025</div>
+        <button class="apply-btn">Apply Now</button>
+      </div>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="pagination">
+      <button class="page-btn">←</button>
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <button class="page-btn">4</button>
+      <button class="page-btn">5</button>
+      <span class="page-ellipsis">···</span>
+      <button class="page-btn">192</button>
+      <button class="page-btn">→</button>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>

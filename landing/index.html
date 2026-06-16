@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICJobs — Federal Intelligence & Government Careers</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:         #F4F1EC;
+  --bg-white:   #FDFCFA;
+  --bg-panel:   #EEEAE2;
+  --slate:      #1B3A4B;
+  --slate-mid:  #2A5068;
+  --slate-lt:   #3D6E88;
+  --terra:      #C4622D;
+  --terra-lt:   #E8875A;
+  --terra-pale: #FBE8DC;
+  --sage:       #3A6B4C;
+  --sage-lt:    #4E8E63;
+  --sage-pale:  #DAF0E3;
+  --sky:        #1E6FA6;
+  --sky-pale:   #D6EDFB;
+  --amber:      #B87A1A;
+  --amber-pale: #FEF3D7;
+  --violet:     #5C3D8F;
+  --violet-pale:#EDE6F9;
+  --red:        #C13030;
+  --red-pale:   #FDEAEA;
+  --ink:        #1A1A1A;
+  --ink-mid:    #3E3E3E;
+  --muted:      #7A7A7A;
+  --border:     #D8D2C8;
+  --border-dk:  #BFB8AC;
+  --white:      #FFFFFF;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--ink); overflow-x: hidden; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-dk); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--slate-lt); }
+
+/* ── NAV — exact from files ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; gap: 24px;
+  padding: 14px 48px;
+  background: var(--slate);
+  box-shadow: 0 2px 16px rgba(27,58,75,0.18);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.logo-mark {
+  width: 32px; height: 32px; background: var(--terra);
+  clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif; font-size: 13px; font-weight: 700; color: #fff;
+}
+.logo-text { font-family: 'DM Serif Display', serif; font-size: 18px; font-weight: 600; color: #fff; }
+.logo-text span { color: var(--terra-lt); }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a { color: rgba(255,255,255,0.65); font-size: 13px; font-weight: 500; text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: #fff; }
+.nav-actions { display: flex; gap: 10px; align-items: center; margin-left: auto; }
+.btn-outline {
+  padding: 8px 18px; border: 1px solid rgba(255,255,255,0.35); color: #fff;
+  background: transparent; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;
+}
+.btn-outline:hover { background: rgba(255,255,255,0.1); }
+.btn-solid {
+  padding: 8px 18px; background: var(--terra); color: #fff;
+  border: none; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s;
+}
+.btn-solid:hover { background: var(--terra-lt); }
+
+/* ── HERO — exact pattern from job-detail.html ── */
+.hero {
+  background: var(--slate);
+  padding: 60px 48px 0;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; right: 0; top: 0; bottom: 0; width: 480px;
+  background: linear-gradient(135deg, rgba(196,98,45,0.12) 0%, rgba(30,111,166,0.08) 100%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute; right: 120px; top: 50%;
+  transform: translateY(-50%);
+  width: 300px; height: 300px;
+  background: rgba(196,98,45,0.06);
+  border-radius: 50%;
+  pointer-events: none;
+}
+/* grid overlay same as job-detail hero */
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+.hero-body {
+  position: relative; z-index: 1;
+  max-width: 780px;
+}
+.hero-eyebrow {
+  font-size: 10px; font-weight: 700; color: var(--terra-lt);
+  text-transform: uppercase; letter-spacing: 2.5px;
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--terra-lt); }
+
+.hero-h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 700; color: #fff;
+  line-height: 1.08; letter-spacing: -1px;
+  margin-bottom: 18px;
+}
+.hero-h1 em { color: var(--terra-lt); font-style: italic; }
+
+.hero-sub {
+  font-size: 15px; color: rgba(255,255,255,0.55);
+  max-width: 560px; line-height: 1.75; font-weight: 400;
+  margin-bottom: 40px;
+}
+.hero-sub strong { color: rgba(255,255,255,0.82); font-weight: 600; }
+
+/* ── HERO SEARCH — wider version of nav-search style ── */
+.hero-search {
+  display: flex; align-items: stretch;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  height: 52px;
+  max-width: 740px;
+  margin-bottom: 20px;
+}
+.hs-field {
+  flex: 2; display: flex; align-items: center;
+  padding: 0 18px; gap: 10px;
+  border-right: 1px solid rgba(255,255,255,0.15);
+}
+.hs-field svg { color: rgba(255,255,255,0.5); flex-shrink: 0; }
+.hs-field input {
+  flex: 1; background: none; border: none; outline: none;
+  color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px;
+}
+.hs-field input::placeholder { color: rgba(255,255,255,0.4); }
+.hs-loc {
+  flex: 1; display: flex; align-items: center;
+  padding: 0 18px; gap: 10px;
+  border-right: 1px solid rgba(255,255,255,0.15);
+}
+.hs-loc svg { color: rgba(255,255,255,0.5); flex-shrink: 0; }
+.hs-loc input {
+  flex: 1; background: none; border: none; outline: none;
+  color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px;
+  min-width: 0;
+}
+.hs-loc input::placeholder { color: rgba(255,255,255,0.4); }
+.hs-btn {
+  padding: 0 28px; background: var(--terra); color: #fff;
+  border: none; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 0.8px; transition: background 0.2s;
+  flex-shrink: 0;
+}
+.hs-btn:hover { background: var(--terra-lt); }
+
+.hero-tags { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 0; }
+.hero-tags-label { font-size: 11px; color: rgba(255,255,255,0.45); font-weight: 600; }
+.hero-tag {
+  font-size: 11px; padding: 4px 12px; font-weight: 700; border-radius: 2px;
+  cursor: pointer; transition: all 0.18s;
+}
+.ht-terra  { background: rgba(196,98,45,0.25); color: #F4AA80; border: 1px solid rgba(196,98,45,0.4); }
+.ht-terra:hover { background: rgba(196,98,45,0.4); }
+.ht-sky    { background: rgba(30,111,166,0.25); color: #7EC8F0; border: 1px solid rgba(30,111,166,0.4); }
+.ht-sky:hover { background: rgba(30,111,166,0.4); }
+.ht-sage   { background: rgba(58,107,76,0.3); color: #8CD4A4; border: 1px solid rgba(58,107,76,0.45); }
+.ht-sage:hover { background: rgba(58,107,76,0.45); }
+.ht-amber  { background: rgba(184,122,26,0.25); color: #F0C060; border: 1px solid rgba(184,122,26,0.4); }
+.ht-amber:hover { background: rgba(184,122,26,0.4); }
+.ht-new    { background: var(--terra); color: #fff; border: none; }
+
+/* ── HERO STATS BAR — exact from job-detail.html ── */
+.hero-stats {
+  display: flex; gap: 0; flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin-top: 40px;
+  position: relative; z-index: 1;
+}
+.hero-stat {
+  padding: 20px 32px 20px 0;
+  margin-right: 32px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+.hero-stat:last-child { border-right: none; }
+.hs-label { font-size: 10px; color: rgba(255,255,255,0.45); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+.hs-value { font-family: 'DM Serif Display', serif; font-size: 22px; font-weight: 700; color: #fff; line-height: 1; }
+.hs-value.accent { color: var(--terra-lt); }
+.hs-sub { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+/* ── BREADCRUMB — exact from job-detail.html ── */
+.section-bar {
+  padding: 16px 48px;
+  background: var(--bg-white);
+  border-bottom: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  flex-wrap: wrap;
+}
+.section-bar-links { display: flex; gap: 28px; }
+.section-bar-links a {
+  color: var(--slate); font-size: 13px; font-weight: 600;
+  text-decoration: none; transition: color 0.2s;
+}
+.section-bar-links a:hover { color: var(--terra); }
+.section-bar-links a.active { color: var(--terra); border-bottom: 2px solid var(--terra); padding-bottom: 2px; }
+.section-bar-right { display: flex; gap: 10px; align-items: center; }
+
+/* ── MAIN PAGE LAYOUT ── */
+.page-wrap { padding: 0 48px 72px; max-width: 1440px; margin: 0 auto; }
+
+/* ── SECTION TITLE — exact from job-detail.html ── */
+.section-title {
+  font-size: 10px; font-weight: 800; color: var(--slate);
+  text-transform: uppercase; letter-spacing: 2px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--slate);
+  margin-bottom: 18px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.section-title-accent { color: var(--terra); }
+.section-title a {
+  font-size: 11px; font-weight: 700; color: var(--terra);
+  text-decoration: none; transition: opacity 0.2s; text-transform: none; letter-spacing: 0;
+}
+.section-title a:hover { opacity: 0.75; }
+
+/* ── FEATURED BANNER — exact from search-results.html ── */
+.featured-banner {
+  background: linear-gradient(135deg, var(--slate) 0%, var(--slate-mid) 100%);
+  padding: 20px 28px;
+  margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  position: relative; overflow: hidden;
+}
+.featured-banner::before {
+  content: '';
+  position: absolute; right: -40px; top: -40px;
+  width: 160px; height: 160px;
+  background: rgba(196,98,45,0.15);
+  border-radius: 50%;
+}
+.featured-tag {
+  font-size: 10px; font-weight: 800; color: var(--terra-lt);
+  text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px;
+}
+.featured-banner h4 { font-family: 'DM Serif Display', serif; font-size: 17px; font-weight: 600; color: #fff; }
+.featured-banner p { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 4px; }
+.featured-banner-btn {
+  flex-shrink: 0; padding: 9px 22px;
+  background: var(--terra); color: #fff;
+  border: none; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px; font-weight: 700; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 0.5px; transition: background 0.2s;
+}
+.featured-banner-btn:hover { background: var(--terra-lt); }
+
+/* ── JOB CARDS — exact from search-results.html ── */
+.job-card {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-left: 4px solid transparent;
+  padding: 24px 28px;
+  margin-bottom: 10px;
+  cursor: pointer; position: relative;
+  transition: all 0.2s;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 20px; align-items: start;
+}
+.job-card:hover {
+  border-color: var(--slate);
+  border-left-color: var(--terra);
+  box-shadow: 0 4px 20px rgba(27,58,75,0.1);
+  transform: translateY(-1px);
+}
+.job-card.color-terra  { border-left-color: var(--terra); }
+.job-card.color-slate  { border-left-color: var(--slate); }
+.job-card.color-sage   { border-left-color: var(--sage-lt); }
+.job-card.color-sky    { border-left-color: var(--sky); }
+.job-card.color-violet { border-left-color: var(--violet); }
+.job-card.color-amber  { border-left-color: var(--amber); }
+
+.card-agency-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.agency-seal {
+  width: 34px; height: 34px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 800; border-radius: 4px;
+}
+.seal-terra  { background: var(--terra-pale); color: var(--terra); }
+.seal-slate  { background: #D8E8F0; color: var(--slate); }
+.seal-sage   { background: var(--sage-pale); color: var(--sage); }
+.seal-sky    { background: var(--sky-pale); color: var(--sky); }
+.seal-violet { background: var(--violet-pale); color: var(--violet); }
+.seal-amber  { background: var(--amber-pale); color: var(--amber); }
+
+.card-agency { font-size: 11px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 1.2px; }
+.card-sub-agency { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.card-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 19px; font-weight: 700; line-height: 1.25;
+  color: var(--ink); margin-bottom: 12px; transition: color 0.2s;
+}
+.job-card:hover .card-title { color: var(--slate); }
+
+.card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.card-tag { font-size: 11px; padding: 3px 10px; font-weight: 600; border-radius: 2px; }
+.tag-hot     { background: var(--terra-pale); color: var(--terra); border: 1px solid #F0C1A8; }
+.tag-clear   { background: var(--amber-pale); color: var(--amber); border: 1px solid #F0D89A; }
+.tag-remote  { background: var(--sage-pale); color: var(--sage); border: 1px solid #A8D8B6; }
+.tag-new     { background: var(--slate); color: #fff; border: none; }
+.tag-direct  { background: var(--sky-pale); color: var(--sky); border: 1px solid #8EC9EC; }
+.tag-multi   { background: var(--violet-pale); color: var(--violet); border: 1px solid #C3ABEA; }
+.tag-neutral { background: var(--bg-panel); color: var(--muted); border: 1px solid var(--border-dk); }
+.tag-urgent  { background: var(--red-pale); color: var(--red); border: 1px solid #F0AAAA; }
+
+.card-meta { display: flex; flex-wrap: wrap; gap: 16px; }
+.card-meta-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--muted); }
+.card-meta-item svg { flex-shrink: 0; }
+
+.card-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.card-grade { font-family: 'DM Serif Display', serif; font-size: 21px; font-weight: 700; color: var(--slate); line-height: 1; }
+.card-grade-label { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-top: 1px; }
+.card-salary { font-size: 13px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+.card-salary-label { font-size: 10px; color: var(--muted); display: block; text-align: right; }
+.card-deadline { font-size: 11px; color: var(--muted); font-weight: 500; }
+.card-deadline.urgent { color: var(--red); font-weight: 700; background: var(--red-pale); padding: 3px 8px; border-radius: 2px; }
+
+.save-btn {
+  width: 32px; height: 32px;
+  border: 1.5px solid var(--border-dk);
+  background: transparent; color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s; font-size: 15px; border-radius: 2px;
+}
+.save-btn:hover { border-color: var(--terra); color: var(--terra); }
+.save-btn.active { background: var(--terra-pale); border-color: var(--terra); color: var(--terra); }
+
+.apply-btn {
+  padding: 8px 18px;
+  background: var(--slate); color: #fff;
+  border: none; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px; font-weight: 700; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  transition: all 0.2s; white-space: nowrap; border-radius: 2px;
+}
+.apply-btn:hover { background: var(--terra); }
+
+.applicant-bar { width: 80px; }
+.applicant-track { height: 3px; background: var(--border-dk); border-radius: 2px; overflow: hidden; }
+.applicant-fill { height: 100%; background: var(--sage-lt); border-radius: 2px; }
+.applicant-label { font-size: 10px; color: var(--muted); margin-top: 4px; font-weight: 600; text-align: right; }
+
+.saved-stripe {
+  position: absolute; top: 0; right: 0;
+  background: var(--terra); color: #fff;
+  font-size: 9px; font-weight: 800; letter-spacing: 1px;
+  padding: 3px 10px; text-transform: uppercase;
+}
+
+/* ── TWO-COL LAYOUT for jobs + sidebar ── */
+.two-col { display: grid; grid-template-columns: 1fr 300px; gap: 32px; align-items: start; }
+.main-col {}
+.side-col {}
+
+/* ── SIDE CARDS — exact from job-detail.html ── */
+.side-card {
+  background: var(--bg-white); border: 1px solid var(--border);
+  padding: 22px; margin-bottom: 16px;
+}
+.side-card-title {
+  font-size: 10px; font-weight: 800; color: var(--slate);
+  text-transform: uppercase; letter-spacing: 2px;
+  padding-bottom: 10px; border-bottom: 2px solid var(--slate);
+  margin-bottom: 16px;
+}
+
+/* Alert card (from job-detail) */
+.alert-card {
+  background: linear-gradient(135deg, var(--slate) 0%, var(--slate-mid) 100%);
+  padding: 22px; margin-bottom: 16px; position: relative; overflow: hidden;
+}
+.alert-card::before {
+  content: ''; position: absolute; right: -30px; top: -30px;
+  width: 120px; height: 120px; background: rgba(196,98,45,0.15); border-radius: 50%;
+}
+.alert-card h4 { font-family: 'DM Serif Display', serif; font-size: 17px; color: #fff; margin-bottom: 6px; position: relative; z-index: 1; }
+.alert-card p { font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 16px; line-height: 1.5; position: relative; z-index: 1; }
+.alert-input {
+  width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2); color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px;
+  outline: none; margin-bottom: 8px; position: relative; z-index: 1;
+}
+.alert-input::placeholder { color: rgba(255,255,255,0.4); }
+.alert-btn {
+  width: 100%; padding: 10px; background: var(--terra); color: #fff;
+  border: none; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px; font-weight: 700; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 0.5px; transition: background 0.2s;
+  position: relative; z-index: 1;
+}
+.alert-btn:hover { background: var(--terra-lt); }
+
+/* Similar jobs (from job-detail) */
+.similar-job {
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: all 0.2s;
+  border-left: 3px solid transparent; padding-left: 0;
+}
+.similar-job:hover { border-left-color: var(--terra); padding-left: 8px; }
+.similar-job:last-child { border-bottom: none; }
+.sj-agency { font-size: 10px; font-weight: 700; color: var(--terra); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+.sj-title { font-size: 13px; font-weight: 700; color: var(--ink); line-height: 1.3; margin-bottom: 5px; }
+.sj-meta { display: flex; gap: 12px; font-size: 11px; color: var(--muted); }
+.sj-grade { font-weight: 700; color: var(--slate); }
+
+/* ── OVERVIEW CARDS — exact from job-detail.html ── */
+.overview-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  margin-bottom: 32px;
+}
+.overview-card {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  padding: 16px 18px;
+  border-left: 3px solid transparent;
+  transition: border-color 0.2s;
+}
+.overview-card:hover { border-left-color: var(--terra); }
+.oc-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 6px; }
+.oc-value { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.3; }
+.oc-value.accent { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--terra); }
+.oc-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+/* ── REQUIREMENT BLOCKS — from job-detail.html ── */
+.req-block {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  padding: 20px 24px; margin-bottom: 12px;
+  border-left: 3px solid var(--border-dk);
+  transition: border-left-color 0.2s;
+}
+.req-block:hover { border-left-color: var(--slate); }
+.req-block.feature { border-left-color: var(--terra); }
+.req-block.secondary { border-left-color: var(--sage-lt); }
+.req-tag {
+  font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+  margin-bottom: 6px;
+}
+.rt-terra { color: var(--terra); }
+.rt-sage { color: var(--sage); }
+.rt-sky { color: var(--sky); }
+.req-block h4 { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.req-block p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ── BENEFIT CARDS — from job-detail.html ── */
+.benefits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.benefit-card {
+  background: var(--bg-white); border: 1px solid var(--border);
+  padding: 16px 18px; display: flex; align-items: flex-start; gap: 12px;
+  transition: box-shadow 0.2s;
+}
+.benefit-card:hover { box-shadow: 0 2px 12px rgba(27,58,75,0.08); }
+.benefit-icon {
+  width: 36px; height: 36px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; border-radius: 4px;
+}
+.bi-slate  { background: #D8E8F0; }
+.bi-sage   { background: var(--sage-pale); }
+.bi-terra  { background: var(--terra-pale); }
+.bi-amber  { background: var(--amber-pale); }
+.bi-sky    { background: var(--sky-pale); }
+.bi-violet { background: var(--violet-pale); }
+.benefit-name { font-size: 13px; font-weight: 700; color: var(--ink); }
+.benefit-desc { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+
+/* ── APP STEPS — from job-detail sidebar ── */
+.app-step {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 10px 0; border-bottom: 1px dashed var(--border);
+}
+.app-step:last-child { border-bottom: none; }
+.step-num {
+  width: 26px; height: 26px; flex-shrink: 0;
+  background: var(--slate); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; border-radius: 50%;
+}
+.step-num.done { background: var(--sage-lt); }
+.step-num.active { background: var(--terra); }
+.step-name { font-size: 13px; font-weight: 700; color: var(--ink); }
+.step-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* ── AGENCY GRID ── */
+.agency-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px; }
+.agency-card {
+  background: var(--bg-white); border: 1px solid var(--border);
+  padding: 20px 22px;
+  border-left: 3px solid transparent;
+  cursor: pointer; transition: all 0.2s;
+}
+.agency-card:hover { border-left-color: var(--terra); box-shadow: 0 2px 12px rgba(27,58,75,0.08); }
+.ag-top { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.ag-seal {
+  width: 42px; height: 42px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; border-radius: 6px;
+}
+.ag-name { font-family: 'DM Serif Display', serif; font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.agency-card:hover .ag-name { color: var(--slate); }
+.ag-full { font-size: 11px; color: var(--muted); margin-bottom: 12px; line-height: 1.45; }
+.ag-stats { display: flex; gap: 20px; padding-top: 12px; border-top: 1px solid var(--border); }
+.ag-stat-n { font-family: 'DM Serif Display', serif; font-size: 18px; font-weight: 700; color: var(--terra); line-height: 1; }
+.ag-stat-l { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-top: 2px; }
+
+/* ── CLEARANCE SECTION ── */
+.clearance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.clearance-card {
+  background: var(--bg-white); border: 1px solid var(--border);
+  padding: 20px 22px;
+  border-left: 3px solid var(--border-dk);
+  cursor: pointer; transition: all 0.2s;
+}
+.clearance-card:hover { border-left-color: var(--terra); box-shadow: 0 2px 12px rgba(27,58,75,0.08); }
+.cl-level {
+  font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+  margin-bottom: 6px;
+}
+.cl-none .cl-level { color: var(--muted); }
+.cl-pub .cl-level { color: var(--sage); }
+.cl-sec .cl-level { color: var(--sky); }
+.cl-ts .cl-level { color: var(--amber); }
+.cl-sci .cl-level { color: var(--terra); }
+.cl-none { border-left-color: var(--border-dk); }
+.cl-pub { border-left-color: var(--sage-lt); }
+.cl-sec { border-left-color: var(--sky); }
+.cl-ts { border-left-color: var(--amber); }
+.cl-sci { border-left-color: var(--terra); }
+.cl-name { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.cl-count { font-family: 'DM Serif Display', serif; font-size: 24px; font-weight: 700; line-height: 1; margin-bottom: 2px; }
+.cl-none .cl-count { color: var(--muted); }
+.cl-pub .cl-count { color: var(--sage); }
+.cl-sec .cl-count { color: var(--sky); }
+.cl-ts .cl-count { color: var(--amber); }
+.cl-sci .cl-count { color: var(--terra); }
+.cl-desc { font-size: 12px; color: var(--muted); line-height: 1.5; margin-top: 4px; }
+
+/* ── SHARE/SHARE-STYLE ROW ── */
+.share-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 20px 0; border-top: 1px solid var(--border);
+  font-size: 12px; color: var(--muted); font-weight: 600;
+}
+.share-btn {
+  padding: 6px 14px; border: 1.5px solid var(--border-dk);
+  background: transparent; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px; font-weight: 600; color: var(--ink-mid);
+  cursor: pointer; transition: all 0.2s; border-radius: 2px;
+}
+.share-btn:hover { border-color: var(--slate); color: var(--slate); }
+
+/* ── CTA STRIP — final CTA ── */
+.cta-strip {
+  background: linear-gradient(135deg, var(--slate) 0%, var(--slate-mid) 100%);
+  padding: 44px 48px;
+  display: flex; align-items: center; justify-content: space-between; gap: 32px;
+  position: relative; overflow: hidden;
+  margin: 40px 0 0;
+}
+.cta-strip::before {
+  content: ''; position: absolute; right: -60px; top: 50%;
+  transform: translateY(-50%);
+  width: 240px; height: 240px;
+  background: rgba(196,98,45,0.12); border-radius: 50%;
+}
+.cta-strip::after {
+  content: ''; position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.cta-content { position: relative; z-index: 1; }
+.cta-eyebrow { font-size: 10px; font-weight: 800; color: var(--terra-lt); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.cta-eyebrow::before { content: ''; display: block; width: 20px; height: 1px; background: var(--terra-lt); }
+.cta-h2 { font-family: 'DM Serif Display', serif; font-size: 30px; font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 6px; }
+.cta-h2 em { color: var(--terra-lt); font-style: italic; }
+.cta-sub { font-size: 14px; color: rgba(255,255,255,0.55); font-weight: 400; max-width: 480px; line-height: 1.6; }
+.cta-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; position: relative; z-index: 1; }
+.cta-btn-pri {
+  padding: 13px 28px; background: var(--terra); color: #fff;
+  border: none; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 0.8px; transition: background 0.2s;
+}
+.cta-btn-pri:hover { background: var(--terra-lt); }
+.cta-btn-ghost {
+  padding: 12px 24px; border: 1px solid rgba(255,255,255,0.35); color: #fff;
+  background: transparent; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;
+}
+.cta-btn-ghost:hover { background: rgba(255,255,255,0.1); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--slate);
+  padding: 56px 48px 32px;
+  position: relative; overflow: hidden;
+}
+footer::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.footer-inner { position: relative; z-index: 1; }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; margin-bottom: 48px; }
+.footer-brand-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.footer-brand-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.75; max-width: 280px; margin-bottom: 20px; }
+.footer-col-title {
+  font-size: 10px; font-weight: 800; color: rgba(255,255,255,0.45);
+  text-transform: uppercase; letter-spacing: 2px;
+  padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 16px;
+}
+.footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
+.footer-col a:hover { color: #fff; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 12px; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: rgba(255,255,255,0.6); }
+
+/* ── SECTION SPACER ── */
+.section-block { margin-top: 40px; }
+.section-block-tight { margin-top: 28px; }
+
+/* ── ACTIVE FILTERS row ── */
+.active-filters {
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.filter-label { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-right: 2px; }
+.filter-chip {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 12px;
+  font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.filter-chip.c-slate { background: #E0EBF1; color: var(--slate); border: 1px solid #B3CFDC; }
+.filter-chip.c-terra { background: var(--terra-pale); color: var(--terra); border: 1px solid #F0C1A8; }
+.filter-chip.c-sage  { background: var(--sage-pale); color: var(--sage); border: 1px solid #A8D8B6; }
+.filter-chip.c-sky   { background: var(--sky-pale); color: var(--sky); border: 1px solid #8EC9EC; }
+.chip-x { font-size: 15px; line-height: 1; opacity: 0.7; }
+
+/* ── PULSE ANIMATION ── */
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+.pulse-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--sage-lt);
+  display: inline-block; animation: pulse 1.8s infinite; margin-right: 5px; vertical-align: middle;
+}
+
+/* sticky sidebar */
+.sticky-wrap { position: sticky; top: 80px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="logo-mark">IC</div>
+    <div class="logo-text">IC<span>Jobs</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="#">Find Jobs</a>
+    <a href="#">Agencies</a>
+    <a href="#">Clearances</a>
+    <a href="#">Veterans</a>
+    <a href="#">Resources</a>
+  </div>
+  <div class="nav-actions">
+    <button class="btn-outline">Sign In</button>
+    <button class="btn-solid">Create Profile</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<div class="hero">
+  <div class="hero-grid"></div>
+
+  <div class="hero-body">
+    <div class="hero-eyebrow">
+      Intelligence Community Careers · 47,200+ Active Positions
+    </div>
+
+    <h1 class="hero-h1">
+      Federal careers for those<br>
+      who <em>serve the nation.</em>
+    </h1>
+
+    <p class="hero-sub">
+      The premier job board for <strong>intelligence, defense, and government professionals.</strong>
+      Clearance-aware matching, verified agency postings, and GS pay guidance — all in one place.
+    </p>
+
+    <!-- SEARCH — wider hero variant of nav-search pattern -->
+    <div class="hero-search">
+      <div class="hs-field">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="hero-q" type="text" placeholder="Job title, keyword, or agency…">
+      </div>
+      <div class="hs-loc">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <input type="text" placeholder="City, state, or Remote">
+      </div>
+      <button class="hs-btn" onclick="heroSearch()">Search</button>
+    </div>
+
+    <div class="hero-tags">
+      <span class="hero-tags-label">Trending:</span>
+      <span class="hero-tag ht-terra" onclick="setQ('Intelligence Analyst')">Intelligence Analyst</span>
+      <span class="hero-tag ht-sky"   onclick="setQ('Cybersecurity GS-13')">Cybersecurity GS-13</span>
+      <span class="hero-tag ht-sage"  onclick="setQ('Software Engineer Remote')">Software Engineer Remote</span>
+      <span class="hero-tag ht-amber" onclick="setQ('TS/SCI')">TS/SCI</span>
+      <span class="hero-tag ht-new"   onclick="setQ('NSA')">NSA — Hiring Now</span>
+    </div>
+  </div>
+
+  <!-- STATS BAR — exact from job-detail.html hero -->
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hs-label">Active Positions</div>
+      <div class="hs-value accent">47,200+</div>
+      <div class="hs-sub">Updated daily</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-label">Federal Agencies</div>
+      <div class="hs-value">138</div>
+      <div class="hs-sub">Verified postings</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-label">Clearance-Required Roles</div>
+      <div class="hs-value accent">12,400+</div>
+      <div class="hs-sub">TS · TS/SCI · SCI + Poly</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-label">Avg. GS-13 Salary</div>
+      <div class="hs-value">$112k–$145k</div>
+      <div class="hs-sub">Washington D.C. locality</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-label">New This Week</div>
+      <div class="hs-value accent">2,814</div>
+      <div class="hs-sub">Across all agencies</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SECTION BAR ═══════════════════════════════ -->
+<div class="section-bar">
+  <div class="section-bar-links">
+    <a href="#" class="active">All Jobs</a>
+    <a href="#">Intelligence Community</a>
+    <a href="#">Cybersecurity</a>
+    <a href="#">Software Engineering</a>
+    <a href="#">Cleared Roles</a>
+    <a href="#">Remote Eligible</a>
+    <a href="#">Veterans</a>
+  </div>
+  <div class="section-bar-right">
+    <button class="share-btn">Set Job Alert</button>
+    <button class="btn-solid" style="font-size:12px;padding:7px 16px;">Post a Job</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PAGE BODY ═══════════════════════════════ -->
+<div class="page-wrap">
+
+  <!-- ── OVERVIEW STAT CARDS ── -->
+  <div class="section-block">
+    <div class="section-title">
+      <span>Today's Snapshot <span class="section-title-accent">· Live Data</span></span>
+      <span style="font-size:10px;color:var(--muted);font-weight:500;text-transform:none;letter-spacing:0;">Last refreshed 6 min ago</span>
+    </div>
+    <div class="overview-grid">
+      <div class="overview-card">
+        <div class="oc-label">Total Open Positions</div>
+        <div class="oc-value accent">47,214</div>
+        <div class="oc-sub">+142 since yesterday</div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-label">Closing in 7 Days</div>
+        <div class="oc-value accent" style="color:var(--red);font-family:'Fraunces',serif;font-size:22px;">1,340</div>
+        <div class="oc-sub">Apply before deadline</div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-label">Direct Hire Authorities</div>
+        <div class="oc-value accent" style="color:var(--sage);font-family:'Fraunces',serif;font-size:22px;">4,820</div>
+        <div class="oc-sub">Streamlined hiring process</div>
+      </div>
+      <div class="overview-card">
+        <div class="oc-label">Agencies Actively Hiring</div>
+        <div class="oc-value accent" style="color:var(--sky);font-family:'Fraunces',serif;font-size:22px;">89</div>
+        <div class="oc-sub">Out of 138 total agencies</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FEATURED JOBS + SIDEBAR ── -->
+  <div class="two-col">
+
+    <!-- LEFT: job listings -->
+    <div class="main-col">
+
+      <!-- Featured banner -->
+      <div class="featured-banner">
+        <div style="position:relative;z-index:1">
+          <div class="featured-tag">Priority Match</div>
+          <h4>NSA is conducting a mass hiring event — 800+ Software Engineering roles open now</h4>
+          <p>TS/SCI required · Ft. Meade, MD + Remote eligible · GS-12 through GS-15</p>
+        </div>
+        <button class="featured-banner-btn" style="position:relative;z-index:1">View Openings →</button>
+      </div>
+
+      <!-- Active filters row -->
+      <div class="active-filters">
+        <span class="filter-label">Active:</span>
+        <div class="filter-chip c-slate">Full-Time <span class="chip-x">×</span></div>
+        <div class="filter-chip c-sky">GS-11 to GS-14 <span class="chip-x">×</span></div>
+        <div class="filter-chip c-sage">Remote Eligible <span class="chip-x">×</span></div>
+        <span style="font-size:12px;color:var(--red);cursor:pointer;margin-left:4px;font-weight:600;">✕ Clear all</span>
+      </div>
+
+      <!-- CARD 1 — CIA / Violet -->
+      <div class="job-card color-violet">
+        <div class="saved-stripe">Featured</div>
+        <div>
+          <div class="card-agency-row">
+            <div class="agency-seal seal-violet">CIA</div>
+            <div>
+              <div class="card-agency">Central Intelligence Agency</div>
+              <div class="card-sub-agency">Directorate of Science & Technology</div>
+            </div>
+          </div>
+          <div class="card-title">Data Scientist (Machine Learning) — GS-13/14</div>
+          <div class="card-tags">
+            <span class="card-tag tag-clear">TS/SCI + Full-Scope Poly</span>
+            <span class="card-tag tag-hot">High Demand</span>
+            <span class="card-tag tag-new">NEW</span>
+          </div>
+          <div class="card-meta">
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Langley, VA (On-Site)
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Posted Feb 19, 2026
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Permanent · Full-Time
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              48 applicants
+            </div>
+          </div>
+        </div>
+        <div class="card-right">
+          <button class="save-btn">☆</button>
+          <div>
+            <div class="card-grade">GS-13/14</div>
+            <span class="card-grade-label">Pay Grade</span>
+          </div>
+          <div>
+            <div class="card-salary">$112,015 – $172,075</div>
+            <span class="card-salary-label">per year</span>
+          </div>
+          <div class="applicant-bar">
+            <div class="applicant-track"><div class="applicant-fill" style="width:15%;"></div></div>
+            <div class="applicant-label">Low competition</div>
+          </div>
+          <div class="card-deadline">Closes Mar 7, 2026</div>
+          <button class="apply-btn">Apply Now</button>
+        </div>
+      </div>
+
+      <!-- CARD 2 — NSA / Slate -->
+      <div class="job-card color-slate">
+        <div>
+          <div class="card-agency-row">
+            <div class="agency-seal seal-slate">NSA</div>
+            <div>
+              <div class="card-agency">National Security Agency</div>
+              <div class="card-sub-agency">Cybersecurity Directorate</div>
+            </div>
+          </div>
+          <div class="card-title">Computer Network Defense Analyst (Mid-Level)</div>
+          <div class="card-tags">
+            <span class="card-tag tag-clear">TS/SCI + CI Poly</span>
+            <span class="card-tag tag-remote">Remote Eligible</span>
+            <span class="card-tag tag-multi">8 Vacancies</span>
+          </div>
+          <div class="card-meta">
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Fort Meade, MD / Remote
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Posted Feb 17, 2026
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Permanent · Full-Time
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              62 applicants
+            </div>
+          </div>
+        </div>
+        <div class="card-right">
+          <button class="save-btn active">★</button>
+          <div>
+            <div class="card-grade">GS-12/13</div>
+            <span class="card-grade-label">Pay Grade</span>
+          </div>
+          <div>
+            <div class="card-salary">$94,199 – $145,617</div>
+            <span class="card-salary-label">per year</span>
+          </div>
+          <div class="applicant-bar">
+            <div class="applicant-track"><div class="applicant-fill" style="width:22%;"></div></div>
+            <div class="applicant-label">Low competition</div>
+          </div>
+          <div class="card-deadline">Closes Apr 1, 2026</div>
+          <button class="apply-btn">Apply Now</button>
+        </div>
+      </div>
+
+      <!-- CARD 3 — DHS/CISA / Terra -->
+      <div class="job-card color-terra">
+        <div>
+          <div class="card-agency-row">
+            <div class="agency-seal seal-sky">DHS</div>
+            <div>
+              <div class="card-agency">Dept. of Homeland Security</div>
+              <div class="card-sub-agency">CISA — Cybersecurity Division</div>
+            </div>
+          </div>
+          <div class="card-title">Supervisory Cybersecurity Specialist (Threat Intelligence)</div>
+          <div class="card-tags">
+            <span class="card-tag tag-direct">Direct Hire</span>
+            <span class="card-tag tag-remote">Hybrid — 2 days remote</span>
+            <span class="card-tag tag-hot">Closes Soon</span>
+          </div>
+          <div class="card-meta">
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Arlington, VA (Hybrid)
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Posted Feb 14, 2026
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Permanent · Full-Time
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              214 applicants
+            </div>
+          </div>
+        </div>
+        <div class="card-right">
+          <button class="save-btn">☆</button>
+          <div>
+            <div class="card-grade">GS-14</div>
+            <span class="card-grade-label">Pay Grade</span>
+          </div>
+          <div>
+            <div class="card-salary">$132,368 – $172,075</div>
+            <span class="card-salary-label">per year</span>
+          </div>
+          <div class="applicant-bar">
+            <div class="applicant-track"><div class="applicant-fill" style="width:60%;background:var(--amber);"></div></div>
+            <div class="applicant-label">Medium competition</div>
+          </div>
+          <div class="card-deadline urgent">Closes Feb 28, 2026</div>
+          <button class="apply-btn">Apply Now</button>
+        </div>
+      </div>
+
+      <!-- CARD 4 — DIA / Amber -->
+      <div class="job-card color-amber">
+        <div>
+          <div class="card-agency-row">
+            <div class="agency-seal seal-amber">DIA</div>
+            <div>
+              <div class="card-agency">Defense Intelligence Agency</div>
+              <div class="card-sub-agency">Directorate for Analysis</div>
+            </div>
+          </div>
+          <div class="card-title">Senior All-Source Intelligence Analyst</div>
+          <div class="card-tags">
+            <span class="card-tag tag-clear">TS/SCI Required</span>
+            <span class="card-tag tag-neutral">Language Bonus Available</span>
+          </div>
+          <div class="card-meta">
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Pentagon, Arlington, VA
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Posted Feb 10, 2026
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Permanent · Full-Time
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              91 applicants
+            </div>
+          </div>
+        </div>
+        <div class="card-right">
+          <button class="save-btn">☆</button>
+          <div>
+            <div class="card-grade">GS-14</div>
+            <span class="card-grade-label">Pay Grade</span>
+          </div>
+          <div>
+            <div class="card-salary">$132,368 – $172,075</div>
+            <span class="card-salary-label">per year</span>
+          </div>
+          <div class="applicant-bar">
+            <div class="applicant-track"><div class="applicant-fill" style="width:28%;"></div></div>
+            <div class="applicant-label">Low competition</div>
+          </div>
+          <div class="card-deadline">Closes Mar 22, 2026</div>
+          <button class="apply-btn">Apply Now</button>
+        </div>
+      </div>
+
+      <!-- CARD 5 — GSA / Sage -->
+      <div class="job-card color-sage">
+        <div>
+          <div class="card-agency-row">
+            <div class="agency-seal seal-terra">GSA</div>
+            <div>
+              <div class="card-agency">General Services Administration</div>
+              <div class="card-sub-agency">Office of Technology Transformation Services</div>
+            </div>
+          </div>
+          <div class="card-title">IT Specialist (Internet), GS-12/13</div>
+          <div class="card-tags">
+            <span class="card-tag tag-direct">Direct Hire Authority</span>
+            <span class="card-tag tag-remote">Remote — Nationwide</span>
+            <span class="card-tag tag-neutral">Public Trust</span>
+          </div>
+          <div class="card-meta">
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Washington, DC / Remote
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Posted Feb 19, 2026
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Permanent · Full-Time
+            </div>
+            <div class="card-meta-item">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              29 applicants
+            </div>
+          </div>
+        </div>
+        <div class="card-right">
+          <button class="save-btn">☆</button>
+          <div>
+            <div class="card-grade">GS-12/13</div>
+            <span class="card-grade-label">Pay Grade</span>
+          </div>
+          <div>
+            <div class="card-salary">$94,199 – $145,617</div>
+            <span class="card-salary-label">per year</span>
+          </div>
+          <div class="applicant-bar">
+            <div class="applicant-track"><div class="applicant-fill" style="width:9%;"></div></div>
+            <div class="applicant-label">Very low competition</div>
+          </div>
+          <div class="card-deadline">Closes Apr 12, 2026</div>
+          <button class="apply-btn">Apply Now</button>
+        </div>
+      </div>
+
+      <div style="padding-top:4px;">
+        <button class="apply-btn" style="width:100%;padding:12px;font-size:13px;background:var(--bg-white);color:var(--slate);border:1.5px solid var(--border-dk);border-radius:2px;">
+          View All 47,214 Open Positions →
+        </button>
+      </div>
+    </div>
+
+    <!-- RIGHT: sticky sidebar (exact pattern from job-detail.html) -->
+    <div class="side-col">
+      <div class="sticky-wrap">
+
+        <!-- Alert signup -->
+        <div class="alert-card">
+          <h4>Get Job Alerts</h4>
+          <p>Be the first to know when new IC, NSA, or DHS roles are posted matching your clearance.</p>
+          <input class="alert-input" type="email" placeholder="Enter your email address…">
+          <button class="alert-btn">Create Free Alert →</button>
+        </div>
+
+        <!-- How to Apply steps -->
+        <div class="side-card">
+          <div class="side-card-title">How ICJobs Works</div>
+          <div class="app-step">
+            <div class="step-num done">✓</div>
+            <div>
+              <div class="step-name">Create Your Profile</div>
+              <div class="step-desc">Add your clearance level, skills, and GS grade targets.</div>
+            </div>
+          </div>
+          <div class="app-step">
+            <div class="step-num active">2</div>
+            <div>
+              <div class="step-name">Get Matched</div>
+              <div class="step-desc">Clearance-aware algorithm surfaces eligible roles only.</div>
+            </div>
+          </div>
+          <div class="app-step">
+            <div class="step-num">3</div>
+            <div>
+              <div class="step-name">Apply via USAJOBS</div>
+              <div class="step-desc">Apply directly through official agency portals.</div>
+            </div>
+          </div>
+          <div class="app-step">
+            <div class="step-num">4</div>
+            <div>
+              <div class="step-name">Track Applications</div>
+              <div class="step-desc">Monitor status, deadlines, and next steps from your dashboard.</div>
+            </div>
+          </div>
+          <div class="app-step">
+            <div class="step-num">5</div>
+            <div>
+              <div class="step-name">Land Your Role</div>
+              <div class="step-desc">Accept offer, complete background check, and begin service.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Similar roles sidebar -->
+        <div class="side-card">
+          <div class="side-card-title">Trending Searches</div>
+          <div class="similar-job">
+            <div class="sj-agency">NSA</div>
+            <div class="sj-title">Software Engineer (All Levels)</div>
+            <div class="sj-meta"><span>Ft. Meade + Remote</span><span class="sj-grade">GS-12/13/14</span></div>
+          </div>
+          <div class="similar-job">
+            <div class="sj-agency">CIA — DS&T</div>
+            <div class="sj-title">Data Scientist / AI Researcher</div>
+            <div class="sj-meta"><span>Langley, VA</span><span class="sj-grade">GS-13/14</span></div>
+          </div>
+          <div class="similar-job">
+            <div class="sj-agency">FBI Cyber Division</div>
+            <div class="sj-title">Supervisory Special Agent — Cyber</div>
+            <div class="sj-meta"><span>Washington, D.C.</span><span class="sj-grade">GS-14/15</span></div>
+          </div>
+          <div class="similar-job">
+            <div class="sj-agency">ODNI</div>
+            <div class="sj-title">IC Policy Analyst</div>
+            <div class="sj-meta"><span>McLean, VA</span><span class="sj-grade">GS-13</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /two-col -->
+
+  <!-- ── BROWSE BY CLEARANCE ── -->
+  <div class="section-block">
+    <div class="section-title">
+      Browse by <span class="section-title-accent">Clearance Level</span>
+      <a href="#">View all cleared roles →</a>
+    </div>
+    <div class="clearance-grid">
+      <div class="clearance-card cl-none">
+        <div class="cl-level">No Clearance Required</div>
+        <div class="cl-name">Open to the Public</div>
+        <div class="cl-count">18,400</div>
+        <div class="cl-desc">Entry-level, admin, policy, and support roles across all civilian agencies.</div>
+      </div>
+      <div class="clearance-card cl-pub">
+        <div class="cl-level">Public Trust / MBI</div>
+        <div class="cl-name">Public Trust Positions</div>
+        <div class="cl-count">6,200</div>
+        <div class="cl-desc">Moderate and high background investigation. USDA, HHS, Treasury, and more.</div>
+      </div>
+      <div class="clearance-card cl-sec">
+        <div class="cl-level">Secret / Confidential</div>
+        <div class="cl-name">Secret Clearance</div>
+        <div class="cl-count">16,100</div>
+        <div class="cl-desc">Broad defense and federal agency roles. DoD, DHS, DOJ, military branches.</div>
+      </div>
+      <div class="clearance-card cl-ts">
+        <div class="cl-level">Top Secret (TS)</div>
+        <div class="cl-name">Top Secret Clearance</div>
+        <div class="cl-count">4,010</div>
+        <div class="cl-desc">Senior analyst, program manager, and specialist positions. Pentagon, DIA.</div>
+      </div>
+      <div class="clearance-card cl-sci">
+        <div class="cl-level">TS/SCI</div>
+        <div class="cl-name">Top Secret / SCI</div>
+        <div class="cl-count">3,100</div>
+        <div class="cl-desc">Intelligence Community core roles. CIA, NSA, ODNI, DIA primary directorates.</div>
+      </div>
+      <div class="clearance-card cl-sci" style="border-left-color:var(--violet);">
+        <div class="cl-level" style="color:var(--violet);">TS/SCI + Polygraph</div>
+        <div class="cl-name">SCI with Full-Scope Poly</div>
+        <div class="cl-count" style="color:var(--violet);">1,404</div>
+        <div class="cl-desc">Clandestine services, SIGINT, and collection management. CIA, NSA core ops.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── AGENCY SPOTLIGHT ── -->
+  <div class="section-block">
+    <div class="section-title">
+      Top Hiring <span class="section-title-accent">Agencies</span>
+      <a href="#">All 138 agencies →</a>
+    </div>
+    <div class="agency-grid">
+      <div class="agency-card">
+        <div class="ag-top">
+          <div class="ag-seal seal-slate">NSA</div>
+          <div>
+            <div class="ag-name">National Security Agency</div>
+          </div>
+        </div>
+        <div class="ag-full">Cryptology, cyber, signals intelligence, and software engineering careers. Largest IC employer.</div>
+        <div class="ag-stats">
+          <div>
+            <div class="ag-stat-n">824</div>
+            <div class="ag-stat-l">Open Roles</div>
+          </div>
+          <div>
+            <div class="ag-stat-n">82%</div>
+            <div class="ag-stat-l">TS/SCI+</div>
+          </div>
+        </div>
+      </div>
+      <div class="agency-card">
+        <div class="ag-top">
+          <div class="ag-seal seal-violet">CIA</div>
+          <div>
+            <div class="ag-name">Central Intelligence Agency</div>
+          </div>
+        </div>
+        <div class="ag-full">Clandestine services, analysis, DS&T, and support roles. Full-scope polygraph required.</div>
+        <div class="ag-stats">
+          <div>
+            <div class="ag-stat-n">342</div>
+            <div class="ag-stat-l">Open Roles</div>
+          </div>
+          <div>
+            <div class="ag-stat-n">100%</div>
+            <div class="ag-stat-l">Clearance Req.</div>
+          </div>
+        </div>
+      </div>
+      <div class="agency-card">
+        <div class="ag-top">
+          <div class="ag-seal seal-sky">DHS</div>
+          <div>
+            <div class="ag-name">Dept. of Homeland Security</div>
+          </div>
+        </div>
+        <div class="ag-full">Cybersecurity (CISA), immigration enforcement, border protection, and critical infrastructure.</div>
+        <div class="ag-stats">
+          <div>
+            <div class="ag-stat-n">2,140</div>
+            <div class="ag-stat-l">Open Roles</div>
+          </div>
+          <div>
+            <div class="ag-stat-n">41%</div>
+            <div class="ag-stat-l">Remote Eligible</div>
+          </div>
+        </div>
+      </div>
+      <div class="agency-card">
+        <div class="ag-top">
+          <div class="ag-seal seal-amber">DIA</div>
+          <div>
+            <div class="ag-name">Defense Intelligence Agency</div>
+          </div>
+        </div>
+        <div class="ag-full">Military intelligence, HUMINT, MASINT, and strategic analysis. Pentagon-based and CONUS.</div>
+        <div class="ag-stats">
+          <div>
+            <div class="ag-stat-n">618</div>
+            <div class="ag-stat-l">Open Roles</div>
+          </div>
+          <div>
+            <div class="ag-stat-n">GS-11+</div>
+            <div class="ag-stat-l">Typical Grade</div>
+          </div>
+        </div>
+      </div>
+      <div class="agency-card">
+        <div class="ag-top">
+          <div class="ag-seal seal-terra">GSA</div>
+          <div>
+            <div class="ag-name">General Services Administration</div>
+          </div>
+        </div>
+        <div class="ag-full">Technology modernization, procurement, and government services. Many remote positions available.</div>
+        <div class="ag-stats">
+          <div>
+            <div class="ag-stat-n">504</div>
+            <div class="ag-stat-l">Open Roles</div>
+          </div>
+          <div>
+            <div class="ag-stat-n">67%</div>
+            <div class="ag-stat-l">Remote Eligible</div>
+          </div>
+        </div>
+      </div>
+      <div class="agency-card">
+        <div class="ag-top">
+          <div class="ag-seal seal-violet">ODNI</div>
+          <div>
+            <div class="ag-name">Office of the DNI</div>
+          </div>
+        </div>
+        <div class="ag-full">IC-wide coordination, oversight, and policy. Senior-level roles, GS-13 and above preferred.</div>
+        <div class="ag-stats">
+          <div>
+            <div class="ag-stat-n">192</div>
+            <div class="ag-stat-l">Open Roles</div>
+          </div>
+          <div>
+            <div class="ag-stat-n">GS-13+</div>
+            <div class="ag-stat-l">Typical Grade</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FEDERAL BENEFITS ── -->
+  <div class="section-block">
+    <div class="section-title">
+      Why <span class="section-title-accent">Federal Service</span>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon bi-sage">🏥</div>
+        <div>
+          <div class="benefit-name">Federal Health Insurance (FEHB)</div>
+          <div class="benefit-desc">300+ plan options. Government pays ~70% of premium for most employees.</div>
+        </div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-slate">🏛️</div>
+        <div>
+          <div class="benefit-name">FERS Pension + TSP</div>
+          <div class="benefit-desc">Defined benefit pension, Social Security, and 5% matched Thrift Savings Plan.</div>
+        </div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-amber">🏖️</div>
+        <div>
+          <div class="benefit-name">13–26 Days Annual Leave</div>
+          <div class="benefit-desc">Plus 13 sick days and 11 paid federal holidays per year.</div>
+        </div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-sky">👶</div>
+        <div>
+          <div class="benefit-name">12 Weeks Paid Parental Leave</div>
+          <div class="benefit-desc">Federal paid family leave program for all career employees.</div>
+        </div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-terra">💰</div>
+        <div>
+          <div class="benefit-name">Competitive GS Pay + Locality</div>
+          <div class="benefit-desc">DC locality adds up to 33.26% on top of base GS salary.</div>
+        </div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi-violet">📚</div>
+        <div>
+          <div class="benefit-name">Training & Tuition Assistance</div>
+          <div class="benefit-desc">Annual training budgets, certification funding, and degree assistance programs.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CTA ── -->
+  <div class="cta-strip">
+    <div class="cta-content">
+      <div class="cta-eyebrow">Begin Your Mission</div>
+      <div class="cta-h2">Ready to serve? <em>Find your role.</em></div>
+      <div class="cta-sub">Create a free profile in 5 minutes. Set your clearance level, upload your resume, and let ICJobs match you to 47,000+ federal openings.</div>
+    </div>
+    <div class="cta-actions">
+      <button class="cta-btn-pri">Create Free Profile</button>
+      <button class="cta-btn-ghost">Browse Without Signing Up</button>
+    </div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-logo">
+          <div class="logo-mark">IC</div>
+          <div class="logo-text">IC<span>Jobs</span></div>
+        </div>
+        <p class="footer-brand-desc">The premier job board for federal intelligence, defense, and government careers. Clearance-aware matching. Verified postings. Free for candidates.</p>
+        <div style="display:flex;gap:8px;margin-top:4px;">
+          <button class="share-btn" style="font-size:11px;border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.45);">Li</button>
+          <button class="share-btn" style="font-size:11px;border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.45);">X</button>
+          <button class="share-btn" style="font-size:11px;border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.45);">GH</button>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Find Jobs</div>
+        <a href="#">Browse All Jobs</a>
+        <a href="#">By Agency</a>
+        <a href="#">By Clearance Level</a>
+        <a href="#">By GS Grade</a>
+        <a href="#">Remote Federal Jobs</a>
+        <a href="#">IC Community Roles</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Resources</div>
+        <a href="#">Federal Salary Guide</a>
+        <a href="#">GS Pay Scale 2026</a>
+        <a href="#">Clearance Overview</a>
+        <a href="#">Resume Tips</a>
+        <a href="#">USAJOBS Tutorial</a>
+        <a href="#">SF-86 Guide</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <a href="#">About ICJobs</a>
+        <a href="#">For Agencies</a>
+        <a href="#">Post a Job</a>
+        <a href="#">Press</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 ICJobs. Not affiliated with any U.S. Government agency.</div>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Accessibility</a>
+        <a href="#">FOIA</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function heroSearch() {
+  const q = document.getElementById('hero-q').value.trim();
+  if (q) alert('Searching for: "' + q + '"');
+}
+function setQ(val) {
+  document.getElementById('hero-q').value = val;
+  document.getElementById('hero-q').focus();
+}
+document.getElementById('hero-q').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') heroSearch();
+});
+
+// Save button toggle
+document.querySelectorAll('.save-btn').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const on = this.classList.toggle('active');
+    this.textContent = on ? '★' : '☆';
+  });
+});
+</script>
+</body>
+</html>

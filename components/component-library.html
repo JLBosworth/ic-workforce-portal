@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FederalWork — Component Library</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:         #F4F1EC;
+    --bg-white:   #FDFCFA;
+    --bg-panel:   #EEEAE2;
+    --slate:      #1B3A4B;
+    --slate-mid:  #2A5068;
+    --slate-lt:   #3D6E88;
+    --terra:      #C4622D;
+    --terra-lt:   #E8875A;
+    --terra-pale: #FBE8DC;
+    --sage:       #3A6B4C;
+    --sage-lt:    #4E8E63;
+    --sage-pale:  #DAF0E3;
+    --sky:        #1E6FA6;
+    --sky-pale:   #D6EDFB;
+    --amber:      #B87A1A;
+    --amber-pale: #FEF3D7;
+    --violet:     #5C3D8F;
+    --violet-pale:#EDE6F9;
+    --red:        #C13030;
+    --red-pale:   #FDEAEA;
+    --ink:        #1A1A1A;
+    --ink-mid:    #3E3E3E;
+    --muted:      #7A7A7A;
+    --border:     #D8D2C8;
+    --border-dk:  #BFB8AC;
+    --white:      #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--ink); }
+
+  /* ── SIDE NAV ── */
+  .sidenav {
+    position: fixed; left: 0; top: 0; bottom: 0; width: 220px;
+    background: var(--slate); padding: 28px 0; overflow-y: auto; z-index: 100;
+  }
+  .sidenav-logo {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 22px 24px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 16px;
+  }
+  .logo-mark {
+    width: 30px; height: 30px; background: var(--terra);
+    clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif; font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0;
+  }
+  .logo-text { font-family: 'Fraunces', serif; font-size: 16px; color: #fff; font-weight: 600; }
+  .logo-text span { color: var(--terra-lt); }
+  .nav-group { margin-bottom: 6px; }
+  .nav-group-label {
+    font-size: 9px; font-weight: 800; color: rgba(255,255,255,0.3);
+    text-transform: uppercase; letter-spacing: 2px; padding: 10px 22px 4px;
+  }
+  .sidenav a {
+    display: block; padding: 7px 22px; font-size: 12px; font-weight: 500;
+    color: rgba(255,255,255,0.6); text-decoration: none; transition: all 0.2s;
+    border-left: 3px solid transparent;
+  }
+  .sidenav a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+  .sidenav a.active { color: #fff; border-left-color: var(--terra); background: rgba(255,255,255,0.07); }
+
+  /* ── MAIN ── */
+  .main { margin-left: 220px; }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: var(--slate); padding: 48px 56px;
+    position: relative; overflow: hidden;
+  }
+  .page-header::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(196,98,45,0.05) 1px,transparent 1px),
+                      linear-gradient(90deg,rgba(196,98,45,0.05) 1px,transparent 1px);
+    background-size: 40px 40px;
+  }
+  .page-header::after {
+    content: ''; position: absolute; right: -80px; top: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle,rgba(196,98,45,0.1) 0%,transparent 70%);
+  }
+  .ph-eyebrow {
+    font-size: 10px; font-weight: 800; color: var(--terra-lt);
+    text-transform: uppercase; letter-spacing: 3px; margin-bottom: 12px;
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .ph-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--terra-lt); }
+  .page-header h1 {
+    font-family: 'Fraunces', serif; font-size: 44px; font-weight: 900;
+    color: #fff; line-height: 1.05; position: relative; z-index: 1; margin-bottom: 10px;
+  }
+  .page-header h1 em { color: var(--terra-lt); font-style: italic; }
+  .page-header p { font-size: 14px; color: rgba(255,255,255,0.5); max-width: 520px; line-height: 1.7; position: relative; z-index: 1; font-weight: 300; }
+  .ph-stats { display: flex; gap: 40px; margin-top: 28px; position: relative; z-index: 1; }
+  .ph-stat strong { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700; color: var(--terra-lt); display: block; }
+  .ph-stat span { font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ── SECTION WRAPPER ── */
+  .section {
+    padding: 56px; border-bottom: 1px solid var(--border);
+  }
+  .section.alt { background: var(--bg-white); }
+
+  .section-label {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 36px;
+  }
+  .sl-num {
+    font-family: 'Fraunces', serif; font-size: 13px; font-weight: 700;
+    color: var(--terra); background: var(--terra-pale);
+    width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .sl-text {}
+  .sl-title {
+    font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700; color: var(--slate); line-height: 1;
+  }
+  .sl-sub { font-size: 12px; color: var(--muted); margin-top: 3px; font-weight: 400; }
+
+  /* ── COMPONENT BLOCK ── */
+  .comp-block {
+    margin-bottom: 32px;
+  }
+  .comp-label {
+    font-size: 10px; font-weight: 800; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .comp-tag {
+    font-size: 9px; padding: 2px 8px;
+    background: var(--bg-panel); color: var(--muted); font-weight: 700;
+    letter-spacing: 0.5px; font-family: 'Courier New', monospace;
+  }
+  .comp-canvas {
+    background: var(--bg-white); border: 1px solid var(--border);
+    padding: 32px; display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start;
+  }
+  .comp-canvas.dark { background: var(--slate); border-color: rgba(255,255,255,0.1); }
+  .comp-canvas.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .comp-canvas.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .comp-canvas.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+  .comp-canvas.col { flex-direction: column; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━
+     BUTTONS
+  ━━━━━━━━━━━━━━━━━━━━━━ */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700;
+    cursor: pointer; border: none; transition: all 0.2s; letter-spacing: 0.6px;
+    white-space: nowrap; text-transform: uppercase; outline: none;
+  }
+  /* Sizes */
+  .btn-sm  { padding: 7px 16px; font-size: 11px; }
+  .btn-md  { padding: 11px 24px; font-size: 12px; }
+  .btn-lg  { padding: 15px 36px; font-size: 14px; }
+  .btn-xl  { padding: 18px 44px; font-size: 15px; }
+  /* Variants */
+  .btn-primary   { background: var(--terra); color: #fff; }
+  .btn-primary:hover { background: var(--terra-lt); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(196,98,45,0.35); }
+  .btn-secondary { background: var(--slate); color: #fff; }
+  .btn-secondary:hover { background: var(--slate-mid); transform: translateY(-1px); }
+  .btn-ghost     { background: transparent; border: 1.5px solid var(--border-dk); color: var(--ink-mid); text-transform: none; font-weight: 600; letter-spacing: 0; }
+  .btn-ghost:hover { border-color: var(--slate); color: var(--slate); }
+  .btn-outline-terra { background: transparent; border: 1.5px solid var(--terra); color: var(--terra); }
+  .btn-outline-terra:hover { background: var(--terra); color: #fff; }
+  .btn-danger    { background: var(--red); color: #fff; }
+  .btn-danger:hover { opacity: 0.85; }
+  .btn-success   { background: var(--sage-lt); color: #fff; }
+  .btn-success:hover { background: var(--sage); }
+  .btn-icon-only { padding: 10px; border: 1.5px solid var(--border-dk); background: transparent; color: var(--muted); border-radius: 2px; }
+  .btn-icon-only:hover { border-color: var(--slate); color: var(--slate); }
+  .btn:disabled  { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+  .btn-loading   { position: relative; color: transparent !important; }
+  .btn-loading::after {
+    content: ''; position: absolute; width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+    border-radius: 50%; animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━
+     TAGS & BADGES
+  ━━━━━━━━━━━━━━━━━━━━━━ */
+  .tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px;
+    font-weight: 700; padding: 4px 11px; border-radius: 2px; cursor: default;
+  }
+  .tag-new      { background: var(--slate); color: #fff; }
+  .tag-hot      { background: var(--terra-pale); color: var(--terra); border: 1px solid #F0C1A8; }
+  .tag-clear    { background: var(--amber-pale); color: var(--amber); border: 1px solid #F0D89A; }
+  .tag-remote   { background: var(--sage-pale); color: var(--sage); border: 1px solid #A8D8B6; }
+  .tag-direct   { background: var(--sky-pale); color: var(--sky); border: 1px solid #8EC9EC; }
+  .tag-multi    { background: var(--violet-pale); color: var(--violet); border: 1px solid #C3ABEA; }
+  .tag-neutral  { background: var(--bg-panel); color: var(--muted); border: 1px solid var(--border-dk); }
+  .tag-urgent   { background: var(--red-pale); color: var(--red); border: 1px solid #F0AAAA; }
+  .tag-featured { background: var(--slate); color: var(--terra-lt); border: 1px solid rgba(255,255,255,0.15); }
+
+  .badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 800;
+    border-radius: 50%; width: 20px; height: 20px; letter-spacing: 0;
+  }
+  .badge-terra  { background: var(--terra); color: #fff; }
+  .badge-slate  { background: var(--slate); color: #fff; }
+  .badge-red    { background: var(--red); color: #fff; }
+  .badge-sage   { background: var(--sage-lt); color: #fff; }
+
+  .dot-indicator {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 12px; font-weight: 600;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-green  { background: var(--sage-lt); }
+  .dot-amber  { background: var(--amber); }
+  .dot-red    { background: var(--red); }
+  .dot-slate  { background: var(--slate); }
+  .dot-pulse  { animation: dotPulse 1.8s infinite; }
+  @keyframes dotPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.4)} }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━
+     FORM ELEMENTS
+  ━━━━━━━━━━━━━━━━━━━━━━ */
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label {
+    font-size: 11px; font-weight: 800; color: var(--slate);
+    text-transform: uppercase; letter-spacing: 1.2px;
+  }
+  .form-sublabel { font-size: 11px; color: var(--muted); margin-top: -2px; }
+  .form-input {
+    padding: 11px 14px; border: 1.5px solid var(--border-dk);
+    background: var(--bg-white); font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px; color: var(--ink); outline: none; transition: border-color 0.2s;
+    width: 100%;
+  }
+  .form-input::placeholder { color: var(--muted); }
+  .form-input:focus { border-color: var(--slate); }
+  .form-input.error  { border-color: var(--red); }
+  .form-input.success{ border-color: var(--sage-lt); }
+  .form-input:disabled { background: var(--bg-panel); color: var(--muted); cursor: not-allowed; }
+  .form-hint { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .form-hint.error  { color: var(--red); }
+  .form-hint.success{ color: var(--sage); }
+
+  .form-select {
+    padding: 11px 14px; border: 1.5px solid var(--border-dk);
+    background: var(--bg-white); font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px; color: var(--ink); outline: none; cursor: pointer;
+    width: 100%; transition: border-color 0.2s; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237A7A7A' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+    padding-right: 38px;
+  }
+  .form-select:focus { border-color: var(--slate); }
+
+  .form-textarea {
+    padding: 11px 14px; border: 1.5px solid var(--border-dk);
+    background: var(--bg-white); font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px; color: var(--ink); outline: none; resize: vertical;
+    min-height: 100px; width: 100%; transition: border-color 0.2s; line-height: 1.6;
+  }
+  .form-textarea:focus { border-color: var(--slate); }
+
+  /* Checkbox & Radio */
+  .check-item {
+    display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 6px 0;
+  }
+  .check-box {
+    width: 18px; height: 18px; flex-shrink: 0;
+    border: 2px solid var(--border-dk); background: var(--bg-white);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; border-radius: 2px;
+  }
+  .check-box.checked { background: var(--slate); border-color: var(--slate); }
+  .check-box.checked::after { content: '✓'; font-size: 11px; color: #fff; font-weight: 800; }
+  .check-box.indeterminate { background: var(--slate); border-color: var(--slate); }
+  .check-box.indeterminate::after { content: '–'; font-size: 13px; color: #fff; font-weight: 800; }
+  .radio-circle {
+    width: 18px; height: 18px; flex-shrink: 0;
+    border: 2px solid var(--border-dk); background: var(--bg-white);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .radio-circle.checked { border-color: var(--slate); }
+  .radio-circle.checked::after { content: ''; width: 8px; height: 8px; background: var(--slate); border-radius: 50%; }
+  .check-label { font-size: 13px; color: var(--ink-mid); font-weight: 500; }
+  .check-count { font-size: 11px; color: var(--muted); background: var(--bg-panel); padding: 1px 8px; border-radius: 10px; font-weight: 600; margin-left: auto; }
+
+  /* Toggle */
+  .toggle-wrap { display: flex; align-items: center; gap: 12px; }
+  .toggle {
+    width: 44px; height: 24px; background: var(--border-dk); border-radius: 12px;
+    position: relative; cursor: pointer; transition: background 0.2s; flex-shrink: 0;
+  }
+  .toggle::after {
+    content: ''; position: absolute; width: 18px; height: 18px;
+    background: #fff; border-radius: 50%; top: 3px; left: 3px;
+    transition: transform 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  .toggle.on { background: var(--slate); }
+  .toggle.on::after { transform: translateX(20px); }
+  .toggle-label { font-size: 13px; color: var(--ink-mid); font-weight: 500; }
+
+  /* Range slider visual */
+  .range-demo { padding: 8px 0; }
+  .range-track { height: 4px; background: var(--border-dk); position: relative; margin: 14px 0 8px; border-radius: 2px; }
+  .range-fill  { position: absolute; left: 22%; right: 18%; height: 100%; background: var(--slate); border-radius: 2px; }
+  .range-thumb {
+    position: absolute; width: 16px; height: 16px;
+    background: #fff; border: 3px solid var(--slate); border-radius: 50%;
+    top: -6px; box-shadow: 0 1px 5px rgba(0,0,0,0.2); cursor: pointer;
+  }
+  .range-thumb.l { left: calc(22% - 8px); }
+  .range-thumb.r { right: calc(18% - 8px); }
+  .range-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); font-weight: 600; }
+
+  /* Search bar */
+  .search-bar {
+    display: flex; border: 1.5px solid var(--border-dk); background: var(--bg-white);
+    overflow: hidden;
+  }
+  .search-field {
+    flex: 1; display: flex; align-items: center; gap: 10px; padding: 0 14px;
+    border-right: 1px solid var(--border);
+  }
+  .search-field svg { color: var(--muted); flex-shrink: 0; }
+  .search-field input { flex: 1; border: none; outline: none; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: var(--ink); background: none; padding: 12px 0; }
+  .search-field input::placeholder { color: var(--muted); }
+  .search-loc { display: flex; align-items: center; gap: 8px; padding: 0 14px; }
+  .search-loc svg { color: var(--muted); flex-shrink: 0; }
+  .search-loc input { width: 140px; border: none; outline: none; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: var(--ink); background: none; padding: 12px 0; }
+  .search-loc input::placeholder { color: var(--muted); }
+  .search-btn {
+    padding: 0 24px; background: var(--terra); color: #fff;
+    border: none; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px; font-weight: 700; cursor: pointer;
+    text-transform: uppercase; letter-spacing: 0.8px; transition: background 0.2s;
+  }
+  .search-btn:hover { background: var(--terra-lt); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━
+     CARDS
+  ━━━━━━━━━━━━━━━━━━━━━━ */
+  /* Job card */
+  .job-card {
+    background: var(--bg-white); border: 1px solid var(--border);
+    border-left: 4px solid transparent; padding: 22px 24px;
+    cursor: pointer; transition: all 0.2s; position: relative;
+  }
+  .job-card:hover {
+    border-color: var(--slate); border-left-color: var(--terra);
+    box-shadow: 0 4px 20px rgba(27,58,75,0.1); transform: translateY(-1px);
+  }
+  .jc-agency-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .jc-seal {
+    width: 30px; height: 30px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 800; border-radius: 3px;
+  }
+  .seal-t { background: var(--terra-pale); color: var(--terra); }
+  .seal-s { background: #D8E8F0; color: var(--slate); }
+  .seal-sg{ background: var(--sage-pale); color: var(--sage); }
+  .seal-v { background: var(--violet-pale); color: var(--violet); }
+  .seal-a { background: var(--amber-pale); color: var(--amber); }
+  .seal-k { background: var(--sky-pale); color: var(--sky); }
+  .jc-agency { font-size: 10px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 1.2px; }
+  .jc-sub    { font-size: 10px; color: var(--muted); }
+  .jc-title  { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 10px; line-height: 1.3; }
+  .job-card:hover .jc-title { color: var(--slate); }
+  .jc-tags   { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+  .jc-meta   { display: flex; flex-wrap: wrap; gap: 12px; }
+  .jc-meta-i { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--muted); }
+  .jc-right  { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+  .jc-grade  { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 700; color: var(--slate); }
+  .jc-grade-sub { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; text-align: right; margin-top: -6px; }
+  .jc-salary { font-size: 12px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+  .jc-salary-sub { font-size: 9px; color: var(--muted); text-align: right; }
+  .jc-close  { font-size: 11px; color: var(--muted); }
+  .jc-close.u{ color: var(--red); font-weight: 700; background: var(--red-pale); padding: 2px 7px; }
+  .save-star  {
+    font-size: 16px; color: var(--muted); cursor: pointer;
+    border: 1.5px solid var(--border-dk); width: 30px; height: 30px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .save-star:hover { border-color: var(--terra); color: var(--terra); }
+  .save-star.on { color: var(--terra); border-color: var(--terra); background: var(--terra-pale); }
+  .jc-layout { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start; }
+
+  /* Apply competition bar */
+  .comp-bar { width: 80px; }
+  .comp-track { height: 3px; background: var(--border-dk); border-radius: 2px; overflow: hidden; }
+  .comp-fill  { height: 100%; border-radius: 2px; }
+  .fill-low   { background: var(--sage-lt); }
+  .fill-med   { background: var(--amber); }
+  .fill-high  { background: var(--red); }
+  .comp-label { font-size: 9px; color: var(--muted); margin-top: 3px; font-weight: 700; text-align: right; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* Agency card */
+  .agency-card {
+    background: var(--bg-white); border: 1px solid var(--border);
+    padding: 24px; cursor: pointer; transition: all 0.2s; text-align: center;
+    border-top: 3px solid transparent;
+  }
+  .agency-card:hover { border-top-color: var(--terra); box-shadow: 0 4px 16px rgba(27,58,75,0.08); }
+  .ag-seal {
+    width: 52px; height: 52px; margin: 0 auto 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800; border-radius: 6px;
+  }
+  .ag-name { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 4px; line-height: 1.2; }
+  .ag-sub  { font-size: 11px; color: var(--muted); margin-bottom: 12px; }
+  .ag-count { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; color: var(--terra); }
+  .ag-count-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+
+  /* Stat card */
+  .stat-card {
+    background: var(--bg-white); border: 1px solid var(--border);
+    padding: 20px 24px; position: relative; overflow: hidden;
+  }
+  .stat-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .sc-terra::before { background: var(--terra); }
+  .sc-slate::before { background: var(--slate); }
+  .sc-sage::before  { background: var(--sage-lt); }
+  .sc-sky::before   { background: var(--sky); }
+  .sc-amber::before { background: var(--amber); }
+  .sc-violet::before{ background: var(--violet); }
+  .stat-num { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .stat-delta {
+    position: absolute; top: 20px; right: 20px;
+    font-size: 11px; font-weight: 700; padding: 2px 8px;
+  }
+  .delta-up   { background: var(--sage-pale); color: var(--sage); }
+  .delta-down { background: var(--red-pale); color: var(--red); }
+
+  /* Notification / toast card */
+  .toast-card {
+    background: var(--bg-white); border: 1px solid var(--border);
+    border-left: 4px solid var(--terra);
+    padding: 14px 18px; display: flex; gap: 12px; align-items: flex-start;
+    box-shadow: 0 4px 20px rgba(27,58,75,0.12);
+  }
+  .toast-card.info   { border-left-color: var(--sky); }
+  .toast-card.success{ border-left-color: var(--sage-lt); }
+  .toast-card.warning{ border-left-color: var(--amber); }
+  .toast-card.error  { border-left-color: var(--red); }
+  .toast-icon { font-size: 18px; flex-shrink: 0; line-height: 1; margin-top: 1px; }
+  .toast-body {}
+  .toast-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+  .toast-msg   { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .toast-close { margin-left: auto; font-size: 16px; color: var(--muted); cursor: pointer; flex-shrink: 0; padding: 0 4px; transition: color 0.2s; }
+  .toast-close:hover { color: var(--ink); }
+
+  /* Profile card */
+  .profile-card {
+    background: var(--bg-white); border: 1px solid var(--border);
+    padding: 24px; display: flex; gap: 16px; align-items: flex-start;
+  }
+  .profile-avatar {
+    width: 48px; height: 48px; background: var(--slate);
+    border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; color: #fff;
+  }
+  .profile-info { flex: 1; }
+  .profile-name  { font-size: 15px; font-weight: 700; color: var(--ink); }
+  .profile-title { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .profile-tags  { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .profile-actions { display: flex; gap: 8px; margin-top: 14px; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━
+     NAVIGATION
+  ━━━━━━━━━━━━━━━━━━━━━━ */
+  /* Top nav */
+  .topnav-demo {
+    background: var(--slate); padding: 14px 24px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .tn-logo { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .tn-lm { width: 26px; height: 26px; background: var(--terra); clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%); display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 10px; font-weight: 700; color: #fff; }
+  .tn-lt { font-family: 'Fraunces', serif; font-size: 15px; color: #fff; font-weight: 600; }
+  .tn-lt span { color: var(--terra-lt); }
+  .tn-links { display: flex; gap: 24px; }
+  .tn-link { font-size: 12px; color: rgba(255,255,255,0.6); font-weight: 500; cursor: pointer; transition: color 0.2s; }
+  .tn-link:hover, .tn-link.active { color: #fff; }
+  .tn-actions { display: flex; gap: 8px; margin-left: auto; }
+  .tn-btn-ghost { padding: 6px 14px; border: 1px solid rgba(255,255,255,0.3); color: #fff; background: transparent; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; }
+  .tn-btn-solid { padding: 6px 14px; background: var(--terra); color: #fff; border: none; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; }
+
+  /* Breadcrumb */
+  .breadcrumb-demo { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+  .bc-link { color: var(--slate); font-weight: 600; cursor: pointer; }
+  .bc-link:hover { text-decoration: underline; }
+  .bc-sep  { color: var(--border-dk); font-size: 14px; }
+  .bc-cur  { color: var(--muted); }
+
+  /* Tabs */
+  .tabs-demo { border-bottom: 2px solid var(--border); display: flex; gap: 0; }
+  .tab-item {
+    padding: 12px 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+    color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -2px;
+    transition: all 0.2s; white-space: nowrap;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .tab-item:hover { color: var(--slate); }
+  .tab-item.active { color: var(--slate); border-bottom-color: var(--terra); }
+  .tab-count { font-size: 10px; background: var(--bg-panel); color: var(--muted); padding: 1px 7px; border-radius: 10px; font-weight: 700; }
+  .tab-item.active .tab-count { background: var(--terra-pale); color: var(--terra); }
+
+  /* Pagination */
+  .pagination-demo { display: flex; gap: 5px; align-items: center; }
+  .pg-btn {
+    width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+    border: 1.5px solid var(--border-dk); background: var(--bg-white);
+    color: var(--muted); font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+  }
+  .pg-btn:hover { border-color: var(--slate); color: var(--slate); }
+  .pg-btn.active { background: var(--slate); border-color: var(--slate); color: #fff; }
+  .pg-ellipsis { color: var(--muted); padding: 0 2px; font-size: 14px; }
+
+  /* Step progress */
+  .steps-demo { display: flex; align-items: center; gap: 0; }
+  .step-node { display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; }
+  .step-circle {
+    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; z-index: 1;
+  }
+  .step-done   { background: var(--sage-lt); color: #fff; }
+  .step-active { background: var(--terra); color: #fff; }
+  .step-todo   { background: var(--bg-panel); color: var(--muted); border: 2px solid var(--border-dk); }
+  .step-name   { font-size: 10px; font-weight: 700; color: var(--muted); text-align: center; max-width: 60px; line-height: 1.3; }
+  .step-active ~ .step-name, .step-done ~ .step-name { }
+  .step-connector {
+    flex: 1; height: 2px; background: var(--border-dk); min-width: 32px;
+  }
+  .step-connector.done { background: var(--sage-lt); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━
+     ALERTS & NOTIFICATIONS
+  ━━━━━━━━━━━━━━━━━━━━━━ */
+  .alert {
+    padding: 14px 18px; border-left: 4px solid transparent;
+    display: flex; gap: 12px; align-items: flex-start;
+    font-size: 13px; line-height: 1.6;
+  }
+  .alert-info    { background: var(--sky-pale); border-left-color: var(--sky); color: var(--sky); }
+  .alert-success { background: var(--sage-pale); border-left-color: var(--sage-lt); color: var(--sage); }
+  .alert-warning { background: var(--amber-pale); border-left-color: var(--amber); color: var(--amber); }
+  .alert-error   { background: var(--red-pale); border-left-color: var(--red); color: var(--red); }
+  .alert-icon    { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .alert-content { color: var(--ink-mid); }
+  .alert-content strong { font-weight: 700; }
+
+  /* Banner */
+  .banner {
+    background: linear-gradient(135deg, var(--slate), var(--slate-mid));
+    padding: 18px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    position: relative; overflow: hidden;
+  }
+  .banner::after { content: ''; position: absolute; right: -30px; top: -30px; width: 120px; height: 120px; background: rgba(196,98,45,0.12); border-radius: 50%; }
+  .banner-content {}
+  .banner-eyebrow { font-size: 10px; font-weight: 800; color: var(--terra-lt); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 3px; }
+  .banner-title { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 700; color: #fff; }
+  .banner-sub { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+  .banner-btn { flex-shrink: 0; padding: 9px 20px; background: var(--terra); color: #fff; border: none; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; position: relative; z-index: 1; transition: background 0.2s; }
+  .banner-btn:hover { background: var(--terra-lt); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━
+     DATA DISPLAY
+  ━━━━━━━━━━━━━━━━━━━━━━ */
+  /* Progress / competition bar */
+  .progress-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .pr-label { font-size: 12px; font-weight: 600; color: var(--ink-mid); width: 120px; flex-shrink: 0; }
+  .pr-track { flex: 1; height: 8px; background: var(--bg-panel); border-radius: 4px; overflow: hidden; }
+  .pr-fill  { height: 100%; border-radius: 4px; }
+  .pr-pct   { font-size: 12px; font-weight: 700; color: var(--muted); width: 36px; text-align: right; }
+
+  /* GS pay table row */
+  .gs-table { width: 100%; border-collapse: collapse; }
+  .gs-table th { font-size: 10px; font-weight: 800; color: var(--slate); text-transform: uppercase; letter-spacing: 1.5px; padding: 10px 14px; background: var(--bg-panel); border-bottom: 2px solid var(--slate); text-align: left; }
+  .gs-table td { font-size: 13px; color: var(--ink-mid); padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .gs-table tr:hover td { background: var(--terra-pale); }
+  .gs-table tr.highlighted td { background: rgba(196,98,45,0.05); }
+  .gs-table td.grade { font-family: 'Fraunces', serif; font-weight: 700; color: var(--slate); font-size: 15px; }
+  .gs-table td.salary { font-weight: 700; color: var(--ink); }
+  .gs-table td.match { color: var(--sage); font-weight: 700; }
+
+  /* Application timeline */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 6px; bottom: 6px; width: 2px; background: var(--border); }
+  .tl-item { position: relative; padding-bottom: 22px; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-dot {
+    position: absolute; left: -24px; top: 3px;
+    width: 12px; height: 12px; border-radius: 50%;
+    border: 2px solid var(--border-dk); background: var(--bg-white);
+    z-index: 1;
+  }
+  .tl-dot.done   { background: var(--sage-lt); border-color: var(--sage-lt); }
+  .tl-dot.active { background: var(--terra); border-color: var(--terra); }
+  .tl-dot.todo   { background: var(--bg-panel); }
+  .tl-date { font-size: 10px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
+  .tl-title { font-size: 13px; font-weight: 700; color: var(--ink); }
+  .tl-desc  { font-size: 12px; color: var(--muted); line-height: 1.5; margin-top: 2px; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━
+     FILTER SIDEBAR COMPONENTS
+  ━━━━━━━━━━━━━━━━━━━━━━ */
+  .filter-panel-demo {
+    background: var(--bg-white); border: 1px solid var(--border); padding: 20px;
+  }
+  .fp-section { margin-bottom: 20px; }
+  .fp-section-title {
+    font-size: 10px; font-weight: 800; color: var(--slate);
+    text-transform: uppercase; letter-spacing: 2px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--slate);
+    margin-bottom: 12px; display: flex; justify-content: space-between;
+  }
+  .fp-clear { font-size: 10px; color: var(--terra); background: none; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; }
+  .fp-divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+  .grade-grid { display: flex; flex-wrap: wrap; gap: 5px; }
+  .grade-pill {
+    padding: 4px 10px; border: 1.5px solid var(--border-dk);
+    font-size: 11px; color: var(--muted); cursor: pointer; transition: all 0.2s; font-weight: 600;
+  }
+  .grade-pill.sel { background: var(--slate); border-color: var(--slate); color: #fff; }
+  .grade-pill:hover { border-color: var(--slate); color: var(--slate); }
+
+  /* Active filter chips */
+  .filter-chips { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; }
+  .fc-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .f-chip {
+    display: flex; align-items: center; gap: 5px; padding: 4px 11px;
+    font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+  }
+  .fc-slate  { background: #E0EBF1; color: var(--slate); border: 1px solid #B3CFDC; }
+  .fc-terra  { background: var(--terra-pale); color: var(--terra); border: 1px solid #F0C1A8; }
+  .fc-sage   { background: var(--sage-pale); color: var(--sage); border: 1px solid #A8D8B6; }
+  .fc-sky    { background: var(--sky-pale); color: var(--sky); border: 1px solid #8EC9EC; }
+  .fc-x      { opacity: 0.7; font-size: 14px; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━
+     MODALS & OVERLAYS
+  ━━━━━━━━━━━━━━━━━━━━━━ */
+  .modal-demo {
+    background: var(--bg-white); border: 1px solid var(--border);
+    max-width: 480px; box-shadow: 0 16px 48px rgba(27,58,75,0.18);
+  }
+  .modal-header {
+    padding: 20px 24px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .modal-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; color: var(--slate); }
+  .modal-close { font-size: 20px; color: var(--muted); cursor: pointer; line-height: 1; transition: color 0.2s; }
+  .modal-close:hover { color: var(--ink); }
+  .modal-body { padding: 24px; }
+  .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
+
+  /* Drawer panel */
+  .drawer-demo {
+    background: var(--bg-white); border: 1px solid var(--border);
+    border-left: 4px solid var(--terra); width: 320px;
+    box-shadow: -8px 0 32px rgba(27,58,75,0.12);
+  }
+  .drawer-header {
+    padding: 20px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .drawer-title { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; color: var(--slate); }
+  .drawer-body { padding: 20px; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━
+     MISC
+  ━━━━━━━━━━━━━━━━━━━━━━ */
+  /* Skeleton loader */
+  @keyframes shimmer { from { background-position: -400px 0; } to { background-position: 400px 0; } }
+  .skeleton {
+    background: linear-gradient(90deg, var(--bg-panel) 25%, var(--border) 50%, var(--bg-panel) 75%);
+    background-size: 800px 100%; animation: shimmer 1.6s infinite;
+    border-radius: 2px;
+  }
+  .sk-line { height: 14px; margin-bottom: 8px; }
+  .sk-line.short { width: 40%; }
+  .sk-line.medium { width: 70%; }
+  .sk-line.long  { width: 90%; }
+  .sk-box { height: 80px; width: 100%; margin-bottom: 8px; }
+  .sk-circle { width: 40px; height: 40px; border-radius: 50%; }
+
+  /* Empty state */
+  .empty-state {
+    background: var(--bg-white); border: 1px solid var(--border);
+    padding: 48px 32px; text-align: center;
+  }
+  .empty-icon { font-size: 48px; margin-bottom: 16px; display: block; }
+  .empty-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; color: var(--slate); margin-bottom: 8px; }
+  .empty-desc { font-size: 13px; color: var(--muted); max-width: 280px; margin: 0 auto 20px; line-height: 1.6; }
+
+  /* Tooltip visual */
+  .tooltip-demo { position: relative; display: inline-flex; align-items: center; }
+  .tooltip-target {
+    font-size: 12px; font-weight: 700; color: var(--sky); text-decoration: underline dotted;
+    cursor: help;
+  }
+  .tooltip-box {
+    position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    background: var(--slate); color: #fff; font-size: 11px; font-weight: 500;
+    padding: 6px 12px; white-space: nowrap; pointer-events: none; line-height: 1.4;
+    max-width: 200px; white-space: normal; text-align: center;
+  }
+  .tooltip-box::after {
+    content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    border: 5px solid transparent; border-top-color: var(--slate);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border-dk); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--slate-lt); }
+</style>
+</head>
+<body>
+
+<!-- SIDENAV -->
+<nav class="sidenav">
+  <div class="sidenav-logo">
+    <div class="logo-mark">F</div>
+    <div class="logo-text">Federal<span>Work</span></div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-label">Components</div>
+    <a href="#buttons" class="active">Buttons</a>
+    <a href="#tags">Tags & Badges</a>
+    <a href="#forms">Form Elements</a>
+    <a href="#cards">Cards</a>
+    <a href="#navigation">Navigation</a>
+    <a href="#alerts">Alerts & Banners</a>
+    <a href="#data">Data Display</a>
+    <a href="#filters">Filters</a>
+    <a href="#modals">Modals & Drawers</a>
+    <a href="#misc">Loaders & States</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="ph-eyebrow">FederalWork Design System</div>
+    <h1>Component <em>Library</em></h1>
+    <p>Every reusable UI element across the FederalWork application. All components use shared CSS tokens and follow the 8pt spacing grid.</p>
+    <div class="ph-stats">
+      <div class="ph-stat"><strong>60+</strong><span>Components</span></div>
+      <div class="ph-stat"><strong>10</strong><span>Categories</span></div>
+      <div class="ph-stat"><strong>6</strong><span>Color Families</span></div>
+    </div>
+  </div>
+
+  <!-- ━━ BUTTONS ━━ -->
+  <section class="section" id="buttons">
+    <div class="section-label">
+      <div class="sl-num">01</div>
+      <div class="sl-text">
+        <div class="sl-title">Buttons</div>
+        <div class="sl-sub">Action triggers across all contexts — CTA, secondary, ghost, icon-only</div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Variants <span class="comp-tag">.btn-primary .btn-secondary .btn-ghost .btn-outline-terra .btn-danger .btn-success</span></div>
+      <div class="comp-canvas">
+        <button class="btn btn-md btn-primary">Apply Now</button>
+        <button class="btn btn-md btn-secondary">Create Profile</button>
+        <button class="btn btn-md btn-ghost">Save Job</button>
+        <button class="btn btn-md btn-outline-terra">View Agency</button>
+        <button class="btn btn-md btn-danger">Delete Application</button>
+        <button class="btn btn-md btn-success">Application Saved</button>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Sizes <span class="comp-tag">.btn-sm .btn-md .btn-lg .btn-xl</span></div>
+      <div class="comp-canvas" style="align-items:center;">
+        <button class="btn btn-sm btn-primary">Small</button>
+        <button class="btn btn-md btn-primary">Medium</button>
+        <button class="btn btn-lg btn-primary">Large</button>
+        <button class="btn btn-xl btn-primary">Extra Large</button>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">States <span class="comp-tag">:hover :disabled .btn-loading</span></div>
+      <div class="comp-canvas" style="align-items:center;">
+        <button class="btn btn-md btn-primary">Default</button>
+        <button class="btn btn-md btn-primary" style="background:var(--terra-lt);transform:translateY(-1px);box-shadow:0 4px 16px rgba(196,98,45,0.35);">Hover</button>
+        <button class="btn btn-md btn-primary" disabled>Disabled</button>
+        <button class="btn btn-md btn-primary btn-loading">Loading</button>
+        <button class="btn btn-icon-only btn-md">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <button class="btn btn-icon-only btn-md">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">With Icons</div>
+      <div class="comp-canvas" style="align-items:center;">
+        <button class="btn btn-md btn-primary">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Apply Now
+        </button>
+        <button class="btn btn-md btn-secondary">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          Search Jobs
+        </button>
+        <button class="btn btn-md btn-ghost">
+          ☆ Save Job
+        </button>
+        <button class="btn btn-md btn-outline-terra">
+          ↗ Share
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━ TAGS ━━ -->
+  <section class="section alt" id="tags">
+    <div class="section-label">
+      <div class="sl-num">02</div>
+      <div class="sl-text">
+        <div class="sl-title">Tags & Badges</div>
+        <div class="sl-sub">Status indicators, category chips, count badges, dot indicators</div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Job Status Tags <span class="comp-tag">.tag .tag-new .tag-hot .tag-clear .tag-remote etc.</span></div>
+      <div class="comp-canvas">
+        <span class="tag tag-new">NEW</span>
+        <span class="tag tag-featured">⚡ Featured</span>
+        <span class="tag tag-hot">⚡ High Demand</span>
+        <span class="tag tag-urgent">⚠ Closing Soon</span>
+        <span class="tag tag-clear">TS/SCI Required</span>
+        <span class="tag tag-clear">Secret Clearance</span>
+        <span class="tag tag-remote">Remote Eligible</span>
+        <span class="tag tag-direct">Direct Hire</span>
+        <span class="tag tag-multi">15 Vacancies</span>
+        <span class="tag tag-neutral">Full-Time</span>
+        <span class="tag tag-neutral">Permanent</span>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Round Badges <span class="comp-tag">.badge</span></div>
+      <div class="comp-canvas" style="align-items:center;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:13px;font-weight:600;color:var(--ink-mid);">Saved Jobs</span>
+          <span class="badge badge-terra">4</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:13px;font-weight:600;color:var(--ink-mid);">Notifications</span>
+          <span class="badge badge-red">12</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:13px;font-weight:600;color:var(--ink-mid);">Applications</span>
+          <span class="badge badge-slate">7</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:13px;font-weight:600;color:var(--ink-mid);">New Matches</span>
+          <span class="badge badge-sage">3</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Dot Status Indicators</div>
+      <div class="comp-canvas col">
+        <span class="dot-indicator"><span class="dot dot-green"></span>Open — Accepting Applications</span>
+        <span class="dot-indicator"><span class="dot dot-amber"></span>Closing Soon — 3 days left</span>
+        <span class="dot-indicator"><span class="dot dot-red dot-pulse"></span>Closing Today — Apply immediately</span>
+        <span class="dot-indicator"><span class="dot dot-slate"></span>Closed — No longer accepting</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━ FORMS ━━ -->
+  <section class="section" id="forms">
+    <div class="section-label">
+      <div class="sl-num">03</div>
+      <div class="sl-text">
+        <div class="sl-title">Form Elements</div>
+        <div class="sl-sub">Inputs, selects, checkboxes, toggles, search bar, range slider</div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Text Input States</div>
+      <div class="comp-canvas grid-4">
+        <div class="form-group">
+          <label class="form-label">Default</label>
+          <input class="form-input" type="text" placeholder="Job title, keyword...">
+          <span class="form-hint">Search by series code or title</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Focused</label>
+          <input class="form-input" type="text" value="Cybersecurity Analyst" style="border-color:var(--slate);">
+          <span class="form-hint">Showing results for this query</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Error</label>
+          <input class="form-input error" type="text" value="xyz123@@@">
+          <span class="form-hint error">Please enter a valid email address</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Disabled</label>
+          <input class="form-input" type="text" value="Read-only field" disabled>
+          <span class="form-hint">This field cannot be edited</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Select & Textarea</div>
+      <div class="comp-canvas grid-2">
+        <div class="form-group">
+          <label class="form-label">Pay Grade</label>
+          <select class="form-select">
+            <option>Select pay grade...</option>
+            <option>GS-5</option>
+            <option>GS-7</option>
+            <option selected>GS-11 / GS-12</option>
+            <option>GS-13</option>
+            <option>GS-14 / GS-15</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Cover Statement</label>
+          <textarea class="form-textarea" placeholder="Briefly describe your relevant experience and why you're a strong fit for this role..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Checkboxes & Radio Buttons</div>
+      <div class="comp-canvas grid-2">
+        <div>
+          <div class="comp-label" style="border:none;padding-bottom:8px;margin-bottom:4px;">Checkboxes</div>
+          <div class="check-item">
+            <div class="check-box checked"></div>
+            <span class="check-label">Full-Time</span>
+            <span class="check-count">2,918</span>
+          </div>
+          <div class="check-item">
+            <div class="check-box checked"></div>
+            <span class="check-label">Remote Eligible</span>
+            <span class="check-count">341</span>
+          </div>
+          <div class="check-item">
+            <div class="check-box indeterminate"></div>
+            <span class="check-label">All Agencies (partial)</span>
+          </div>
+          <div class="check-item">
+            <div class="check-box"></div>
+            <span class="check-label">Part-Time</span>
+            <span class="check-count">124</span>
+          </div>
+        </div>
+        <div>
+          <div class="comp-label" style="border:none;padding-bottom:8px;margin-bottom:4px;">Radio Buttons</div>
+          <div class="check-item">
+            <div class="radio-circle checked"></div>
+            <span class="check-label">Relevance</span>
+          </div>
+          <div class="check-item">
+            <div class="radio-circle"></div>
+            <span class="check-label">Closing Date (soonest first)</span>
+          </div>
+          <div class="check-item">
+            <div class="radio-circle"></div>
+            <span class="check-label">Pay Grade (high to low)</span>
+          </div>
+          <div class="check-item">
+            <div class="radio-circle"></div>
+            <span class="check-label">Recently Posted</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Toggles</div>
+      <div class="comp-canvas col">
+        <div class="toggle-wrap">
+          <div class="toggle on"></div>
+          <span class="toggle-label">Show Remote-Only Positions</span>
+        </div>
+        <div class="toggle-wrap">
+          <div class="toggle"></div>
+          <span class="toggle-label">Veterans' Preference Only</span>
+        </div>
+        <div class="toggle-wrap">
+          <div class="toggle on"></div>
+          <span class="toggle-label">Job Alerts Enabled</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">GS Grade Pill Selector</div>
+      <div class="comp-canvas">
+        <div class="grade-grid">
+          <div class="grade-pill">GS-5</div>
+          <div class="grade-pill">GS-7</div>
+          <div class="grade-pill">GS-9</div>
+          <div class="grade-pill sel">GS-11</div>
+          <div class="grade-pill sel">GS-12</div>
+          <div class="grade-pill sel">GS-13</div>
+          <div class="grade-pill">GS-14</div>
+          <div class="grade-pill">GS-15</div>
+          <div class="grade-pill">SES</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Salary Range Slider</div>
+      <div class="comp-canvas" style="flex-direction:column;">
+        <div style="width:100%;max-width:420px;" class="range-demo">
+          <div class="range-track">
+            <div class="range-fill"></div>
+            <div class="range-thumb l"></div>
+            <div class="range-thumb r"></div>
+          </div>
+          <div class="range-labels">
+            <span>$62,000 min</span>
+            <span>$140,000 max</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Search Bar (Hero / Nav variant)</div>
+      <div class="comp-canvas col">
+        <div class="search-bar" style="max-width:600px;">
+          <div class="search-field">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" value="Cybersecurity Analyst" placeholder="Job title, keyword...">
+          </div>
+          <div class="search-loc">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <input type="text" value="Washington, D.C." placeholder="Location...">
+          </div>
+          <button class="search-btn">Search</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━ CARDS ━━ -->
+  <section class="section alt" id="cards">
+    <div class="section-label">
+      <div class="sl-num">04</div>
+      <div class="sl-text">
+        <div class="sl-title">Cards</div>
+        <div class="sl-sub">Job listing cards, agency cards, stat cards, profile cards, toasts</div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Job Listing Card — Full</div>
+      <div class="comp-canvas col" style="padding:0;">
+        <div class="job-card color-terra" style="border-left-color:var(--terra);">
+          <div class="jc-layout">
+            <div>
+              <div class="jc-agency-row">
+                <div class="jc-seal seal-t">DHS</div>
+                <div><div class="jc-agency">Dept. of Homeland Security</div><div class="jc-sub">CISA — Threat Intelligence Division</div></div>
+              </div>
+              <div class="jc-title">Supervisory Cybersecurity Analyst (Threat Intelligence)</div>
+              <div class="jc-tags">
+                <span class="tag tag-new" style="font-size:10px;padding:3px 9px;">NEW</span>
+                <span class="tag tag-hot" style="font-size:10px;padding:3px 9px;">⚡ High Demand</span>
+                <span class="tag tag-clear" style="font-size:10px;padding:3px 9px;">TS/SCI Required</span>
+                <span class="tag tag-remote" style="font-size:10px;padding:3px 9px;">Remote Eligible</span>
+              </div>
+              <div class="jc-meta">
+                <div class="jc-meta-i"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Washington, D.C.</div>
+                <div class="jc-meta-i"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Posted Feb 17</div>
+                <div class="jc-meta-i"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>84 applicants</div>
+                <div class="jc-meta-i">Permanent · Full-Time</div>
+              </div>
+            </div>
+            <div class="jc-right">
+              <div class="save-star on">★</div>
+              <div><div class="jc-grade">GS-13/14</div><div class="jc-grade-sub">Pay Grade</div></div>
+              <div><div class="jc-salary">$112,015 – $172,075</div><div class="jc-salary-sub">per year</div></div>
+              <div class="comp-bar"><div class="comp-track"><div class="comp-fill fill-low" style="width:22%"></div></div><div class="comp-label">Low competition</div></div>
+              <div class="jc-close">Closes Mar 3</div>
+            </div>
+          </div>
+        </div>
+        <div class="job-card" style="border-left-color:var(--amber);">
+          <div class="jc-layout">
+            <div>
+              <div class="jc-agency-row">
+                <div class="jc-seal seal-a">FBI</div>
+                <div><div class="jc-agency">Federal Bureau of Investigation</div><div class="jc-sub">Cyber Division</div></div>
+              </div>
+              <div class="jc-title">Supervisory Special Agent — Cyber Operations</div>
+              <div class="jc-tags">
+                <span class="tag tag-clear" style="font-size:10px;padding:3px 9px;">TS/SCI + Poly</span>
+                <span class="tag tag-hot" style="font-size:10px;padding:3px 9px;">⚡ Critical</span>
+              </div>
+              <div class="jc-meta">
+                <div class="jc-meta-i"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Washington, D.C.</div>
+                <div class="jc-meta-i">Permanent · Full-Time</div>
+              </div>
+            </div>
+            <div class="jc-right">
+              <div class="save-star">☆</div>
+              <div><div class="jc-grade">GS-14/15</div><div class="jc-grade-sub">Pay Grade</div></div>
+              <div><div class="jc-salary">$136,908 – $183,500</div><div class="jc-salary-sub">per year</div></div>
+              <div class="jc-close u">⚠ 3 days left</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Agency Cards</div>
+      <div class="comp-canvas grid-4">
+        <div class="agency-card"><div class="ag-seal seal-t">DHS</div><div class="ag-name">Dept. of Homeland Security</div><div class="ag-sub">Federal Agency</div><div class="ag-count">12,104</div><div class="ag-count-label">Open Roles</div></div>
+        <div class="agency-card"><div class="ag-seal seal-s">DOD</div><div class="ag-name">Dept. of Defense</div><div class="ag-sub">Federal Agency</div><div class="ag-count">21,403</div><div class="ag-count-label">Open Roles</div></div>
+        <div class="agency-card"><div class="ag-seal seal-sg">VA</div><div class="ag-name">Veterans Affairs</div><div class="ag-sub">Federal Agency</div><div class="ag-count">18,922</div><div class="ag-count-label">Open Roles</div></div>
+        <div class="agency-card"><div class="ag-seal seal-v">NSA</div><div class="ag-name">National Security Agency</div><div class="ag-sub">Intelligence Community</div><div class="ag-count">3,412</div><div class="ag-count-label">Open Roles</div></div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Stat / KPI Cards</div>
+      <div class="comp-canvas grid-4">
+        <div class="stat-card sc-terra">
+          <div class="stat-delta delta-up">▲ 8%</div>
+          <div class="stat-num" style="color:var(--terra);">94,211</div>
+          <div class="stat-label">Open Positions</div>
+        </div>
+        <div class="stat-card sc-slate">
+          <div class="stat-delta delta-up">▲ 3%</div>
+          <div class="stat-num" style="color:var(--slate);">480+</div>
+          <div class="stat-label">Federal Agencies</div>
+        </div>
+        <div class="stat-card sc-sage">
+          <div class="stat-delta delta-down">▼ 2%</div>
+          <div class="stat-num" style="color:var(--sage);">12,041</div>
+          <div class="stat-label">Remote Roles</div>
+        </div>
+        <div class="stat-card sc-amber">
+          <div class="stat-num" style="color:var(--amber);">GS-12</div>
+          <div class="stat-label">Most Common Grade</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Toast Notifications</div>
+      <div class="comp-canvas col">
+        <div class="toast-card" style="max-width:400px;">
+          <span class="toast-icon">★</span>
+          <div class="toast-body"><div class="toast-title">Job saved successfully</div><div class="toast-msg">This role was added to your saved jobs. You can view it anytime from your dashboard.</div></div>
+          <span class="toast-close">×</span>
+        </div>
+        <div class="toast-card info" style="max-width:400px;">
+          <span class="toast-icon">ℹ</span>
+          <div class="toast-body"><div class="toast-title">Application window opens soon</div><div class="toast-msg">This posting opens for applications on March 1, 2025.</div></div>
+          <span class="toast-close">×</span>
+        </div>
+        <div class="toast-card success" style="max-width:400px;">
+          <span class="toast-icon">✓</span>
+          <div class="toast-body"><div class="toast-title">Application submitted</div><div class="toast-msg">Your application for Cybersecurity Analyst at CISA has been received.</div></div>
+          <span class="toast-close">×</span>
+        </div>
+        <div class="toast-card error" style="max-width:400px;">
+          <span class="toast-icon">✕</span>
+          <div class="toast-body"><div class="toast-title">Application deadline passed</div><div class="toast-msg">This position closed on Feb 28. Set up an alert for similar roles.</div></div>
+          <span class="toast-close">×</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Profile Card</div>
+      <div class="comp-canvas">
+        <div class="profile-card" style="max-width:380px;width:100%;">
+          <div class="profile-avatar">JM</div>
+          <div class="profile-info">
+            <div class="profile-name">Jamie Monroe</div>
+            <div class="profile-title">IT Specialist · Seeking GS-12 or above · Washington D.C.</div>
+            <div class="profile-tags">
+              <span class="tag tag-remote" style="font-size:10px;padding:2px 8px;">Secret Clearance</span>
+              <span class="tag tag-direct" style="font-size:10px;padding:2px 8px;">Veteran</span>
+            </div>
+            <div class="profile-actions">
+              <button class="btn btn-sm btn-secondary">View Profile</button>
+              <button class="btn btn-sm btn-ghost">Message</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━ NAVIGATION ━━ -->
+  <section class="section" id="navigation">
+    <div class="section-label">
+      <div class="sl-num">05</div>
+      <div class="sl-text">
+        <div class="sl-title">Navigation</div>
+        <div class="sl-sub">Top nav, breadcrumbs, tabs, pagination, application step progress</div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Top Navigation Bar</div>
+      <div class="comp-canvas" style="padding:0;">
+        <div class="topnav-demo" style="width:100%;">
+          <div class="tn-logo">
+            <div class="tn-lm">F</div>
+            <div class="tn-lt">Federal<span>Work</span></div>
+          </div>
+          <div class="tn-links">
+            <div class="tn-link active">Find Jobs</div>
+            <div class="tn-link">Veterans</div>
+            <div class="tn-link">Agencies</div>
+            <div class="tn-link">Resources</div>
+          </div>
+          <div class="tn-actions">
+            <button class="tn-btn-ghost">Sign In</button>
+            <button class="tn-btn-solid">Create Profile</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Breadcrumb</div>
+      <div class="comp-canvas">
+        <div class="breadcrumb-demo">
+          <span class="bc-link">Home</span><span class="bc-sep">/</span>
+          <span class="bc-link">Search Results</span><span class="bc-sep">/</span>
+          <span class="bc-link">Cybersecurity</span><span class="bc-sep">/</span>
+          <span class="bc-cur">Supervisory Cybersecurity Analyst</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Tabs</div>
+      <div class="comp-canvas col" style="padding-bottom:0;">
+        <div class="tabs-demo">
+          <div class="tab-item active">Overview <span class="tab-count">—</span></div>
+          <div class="tab-item">Applications <span class="tab-count">7</span></div>
+          <div class="tab-item">Saved Jobs <span class="tab-count">12</span></div>
+          <div class="tab-item">Job Alerts <span class="tab-count">3</span></div>
+          <div class="tab-item">Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Pagination</div>
+      <div class="comp-canvas">
+        <div class="pagination-demo">
+          <button class="pg-btn">←</button>
+          <button class="pg-btn">1</button>
+          <button class="pg-btn active">2</button>
+          <button class="pg-btn">3</button>
+          <button class="pg-btn">4</button>
+          <span class="pg-ellipsis">···</span>
+          <button class="pg-btn">192</button>
+          <button class="pg-btn">→</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Application Step Progress</div>
+      <div class="comp-canvas">
+        <div class="steps-demo" style="width:100%;max-width:560px;">
+          <div class="step-node">
+            <div class="step-circle step-done">✓</div>
+            <div class="step-name">Create Profile</div>
+          </div>
+          <div class="step-connector done"></div>
+          <div class="step-node">
+            <div class="step-circle step-done">✓</div>
+            <div class="step-name">Submit Application</div>
+          </div>
+          <div class="step-connector done"></div>
+          <div class="step-node">
+            <div class="step-circle step-active">3</div>
+            <div class="step-name">Assessment Quiz</div>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step-node">
+            <div class="step-circle step-todo">4</div>
+            <div class="step-name">Interview</div>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step-node">
+            <div class="step-circle step-todo">5</div>
+            <div class="step-name">Offer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━ ALERTS ━━ -->
+  <section class="section alt" id="alerts">
+    <div class="section-label">
+      <div class="sl-num">06</div>
+      <div class="sl-text">
+        <div class="sl-title">Alerts & Banners</div>
+        <div class="sl-sub">Inline alerts (info, success, warning, error), featured banners, active filter chips</div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Inline Alerts</div>
+      <div class="comp-canvas col" style="padding:0;">
+        <div class="alert alert-info"><span class="alert-icon">ℹ</span><div class="alert-content"><strong>Direct Hire Authority Active:</strong> This agency is using streamlined hiring — no competitive referral required. Your application is reviewed directly by the hiring panel.</div></div>
+        <div class="alert alert-success"><span class="alert-icon">✓</span><div class="alert-content"><strong>Veterans' Preference Applies:</strong> You are eligible for a 10-point preference for this position. This has been automatically applied to your application.</div></div>
+        <div class="alert alert-warning"><span class="alert-icon">⚠</span><div class="alert-content"><strong>Security Clearance Required:</strong> You must possess an active TS/SCI clearance at the time of application. Applications without current clearance will not be considered.</div></div>
+        <div class="alert alert-error"><span class="alert-icon">✕</span><div class="alert-content"><strong>Application Closed:</strong> This position is no longer accepting applications as of February 28, 2025. Set up a job alert to be notified of similar openings.</div></div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Featured / Promotional Banner</div>
+      <div class="comp-canvas" style="padding:0;">
+        <div class="banner" style="width:100%;">
+          <div class="banner-content">
+            <div class="banner-eyebrow">⚡ Featured Opportunity</div>
+            <div class="banner-title">DHS is actively hiring 200+ Cybersecurity professionals this quarter</div>
+            <div class="banner-sub">Direct-hire authority active — streamlined application process, no competitive referral required.</div>
+          </div>
+          <button class="banner-btn">View DHS Openings</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Active Filter Chips</div>
+      <div class="comp-canvas">
+        <div class="filter-chips">
+          <span class="fc-label">Filters:</span>
+          <div class="f-chip fc-slate">Full-Time <span class="fc-x">×</span></div>
+          <div class="f-chip fc-terra">Washington D.C. <span class="fc-x">×</span></div>
+          <div class="f-chip fc-sky">GS-11 to GS-13 <span class="fc-x">×</span></div>
+          <div class="f-chip fc-sage">Remote Eligible <span class="fc-x">×</span></div>
+          <span style="font-size:12px;color:var(--red);font-weight:700;cursor:pointer;margin-left:4px;">✕ Clear all</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━ DATA DISPLAY ━━ -->
+  <section class="section" id="data">
+    <div class="section-label">
+      <div class="sl-num">07</div>
+      <div class="sl-text">
+        <div class="sl-title">Data Display</div>
+        <div class="sl-sub">Progress bars, GS pay table, application timeline</div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Competition / Progress Bars</div>
+      <div class="comp-canvas col" style="max-width:500px;">
+        <div class="progress-row">
+          <span class="pr-label">Low Competition</span>
+          <div class="pr-track"><div class="pr-fill fill-low" style="width:18%"></div></div>
+          <span class="pr-pct">18%</span>
+        </div>
+        <div class="progress-row">
+          <span class="pr-label">Medium Competition</span>
+          <div class="pr-track"><div class="pr-fill fill-med" style="width:52%"></div></div>
+          <span class="pr-pct">52%</span>
+        </div>
+        <div class="progress-row">
+          <span class="pr-label">High Competition</span>
+          <div class="pr-track"><div class="pr-fill fill-high" style="width:84%"></div></div>
+          <span class="pr-pct">84%</span>
+        </div>
+        <div class="progress-row">
+          <span class="pr-label">Profile Complete</span>
+          <div class="pr-track"><div class="pr-fill" style="width:70%;background:var(--sky)"></div></div>
+          <span class="pr-pct">70%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">GS Pay Scale Table</div>
+      <div class="comp-canvas" style="padding:0;overflow:auto;">
+        <table class="gs-table" style="width:100%;">
+          <thead>
+            <tr><th>Grade</th><th>Step 1</th><th>Step 5</th><th>Step 10</th><th>Locality (D.C.)</th><th>Match</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="grade">GS-11</td><td>$57,118</td><td>$64,251</td><td>$74,250</td><td>$73,572</td><td class="match">—</td></tr>
+            <tr class="highlighted"><td class="grade">GS-12</td><td>$68,405</td><td>$76,955</td><td>$88,923</td><td class="salary">$91,270</td><td class="match">✓ You qualify</td></tr>
+            <tr class="highlighted"><td class="grade">GS-13</td><td>$81,316</td><td>$91,480</td><td>$105,708</td><td class="salary">$112,015</td><td class="match">✓ You qualify</td></tr>
+            <tr><td class="grade">GS-14</td><td>$96,117</td><td>$108,131</td><td>$124,932</td><td>$132,368</td><td>Stretch</td></tr>
+            <tr><td class="grade">GS-15</td><td>$113,047</td><td>$127,178</td><td>$146,987</td><td>$155,700</td><td style="color:var(--muted);">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Application Timeline</div>
+      <div class="comp-canvas" style="max-width:420px;">
+        <div class="timeline" style="width:100%;">
+          <div class="tl-item">
+            <div class="tl-dot done"></div>
+            <div class="tl-date">Feb 17, 2025</div>
+            <div class="tl-title">Application Submitted</div>
+            <div class="tl-desc">Your application and all required documents were received by CISA HR.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot done"></div>
+            <div class="tl-date">Feb 20, 2025</div>
+            <div class="tl-title">Eligibility Review</div>
+            <div class="tl-desc">HR confirmed your eligibility and minimum qualifications. Status: Qualified.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot active"></div>
+            <div class="tl-date">In Progress</div>
+            <div class="tl-title">Rating & Ranking</div>
+            <div class="tl-desc">Your application is being scored against the rating criteria. This may take 2–4 weeks.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot todo"></div>
+            <div class="tl-date">Upcoming</div>
+            <div class="tl-title">Referral to Hiring Panel</div>
+            <div class="tl-desc">Best-qualified candidates will be referred to the selecting official.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot todo"></div>
+            <div class="tl-date">Upcoming</div>
+            <div class="tl-title">Interview / Selection</div>
+            <div class="tl-desc">Hiring panel conducts interviews. Tentative job offer extended to selected candidate.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━ FILTERS ━━ -->
+  <section class="section alt" id="filters">
+    <div class="section-label">
+      <div class="sl-num">08</div>
+      <div class="sl-text">
+        <div class="sl-title">Filter Panel</div>
+        <div class="sl-sub">Complete sidebar filter system used on the search results page</div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Filter Panel — Sidebar</div>
+      <div class="comp-canvas" style="align-items:flex-start;">
+        <div class="filter-panel-demo" style="width:260px;">
+          <div class="fp-section">
+            <div class="fp-section-title">Department / Agency <button class="fp-clear">Clear</button></div>
+            <div class="check-item"><div class="check-box checked"></div><span class="check-label">Dept. of Homeland Security</span><span class="check-count">841</span></div>
+            <div class="check-item"><div class="check-box"></div><span class="check-label">Dept. of Defense</span><span class="check-count">712</span></div>
+            <div class="check-item"><div class="check-box"></div><span class="check-label">FBI / DOJ</span><span class="check-count">403</span></div>
+            <div class="check-item"><div class="check-box"></div><span class="check-label">NSA / Intelligence</span><span class="check-count">388</span></div>
+          </div>
+          <div class="fp-divider"></div>
+          <div class="fp-section">
+            <div class="fp-section-title">Pay Grade (GS) <button class="fp-clear">Clear</button></div>
+            <div class="grade-grid">
+              <div class="grade-pill">GS-9</div>
+              <div class="grade-pill sel">GS-11</div>
+              <div class="grade-pill sel">GS-12</div>
+              <div class="grade-pill sel">GS-13</div>
+              <div class="grade-pill">GS-14</div>
+              <div class="grade-pill">GS-15</div>
+            </div>
+          </div>
+          <div class="fp-divider"></div>
+          <div class="fp-section">
+            <div class="fp-section-title">Security Clearance <button class="fp-clear">Clear</button></div>
+            <div class="check-item"><div class="check-box"></div><span class="check-label">Not Required</span><span class="check-count">688</span></div>
+            <div class="check-item"><div class="check-box checked"></div><span class="check-label">Secret</span><span class="check-count">1,204</span></div>
+            <div class="check-item"><div class="check-box"></div><span class="check-label">Top Secret</span><span class="check-count">1,002</span></div>
+            <div class="check-item"><div class="check-box"></div><span class="check-label">TS/SCI</span><span class="check-count">594</span></div>
+          </div>
+          <div class="fp-divider"></div>
+          <div class="fp-section">
+            <div class="fp-section-title">Work Location</div>
+            <div class="check-item"><div class="radio-circle checked"></div><span class="check-label">Any Location</span></div>
+            <div class="check-item"><div class="radio-circle"></div><span class="check-label">Remote Only</span></div>
+            <div class="check-item"><div class="radio-circle"></div><span class="check-label">Hybrid Eligible</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━ MODALS ━━ -->
+  <section class="section" id="modals">
+    <div class="section-label">
+      <div class="sl-num">09</div>
+      <div class="sl-text">
+        <div class="sl-title">Modals & Drawers</div>
+        <div class="sl-sub">Dialog overlays and side drawer panels</div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Modal Dialog</div>
+      <div class="comp-canvas" style="background:rgba(27,58,75,0.08);">
+        <div class="modal-demo">
+          <div class="modal-header">
+            <div class="modal-title">Confirm Application</div>
+            <span class="modal-close">×</span>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-info" style="margin-bottom:16px;"><span class="alert-icon" style="font-size:14px;">ℹ</span><div class="alert-content" style="font-size:12px;"><strong>Before you submit:</strong> Ensure your federal resume includes all required KSA narratives and your clearance documentation is attached.</div></div>
+            <div class="form-group" style="margin-bottom:14px;">
+              <label class="form-label">Position</label>
+              <input class="form-input" type="text" value="Supervisory Cybersecurity Analyst, CISA" disabled>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Applicant Name</label>
+              <input class="form-input" type="text" value="Jamie Monroe">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-md btn-ghost">Cancel</button>
+            <button class="btn btn-md btn-primary">Submit Application</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Side Drawer Panel</div>
+      <div class="comp-canvas" style="background:rgba(27,58,75,0.08);align-items:stretch;justify-content:flex-end;">
+        <div class="drawer-demo">
+          <div class="drawer-header">
+            <div class="drawer-title">Quick Apply</div>
+            <span class="modal-close">×</span>
+          </div>
+          <div class="drawer-body">
+            <div style="font-size:11px;font-weight:700;color:var(--terra);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px;">CISA — DHS</div>
+            <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--slate);margin-bottom:16px;line-height:1.3;">Supervisory Cybersecurity Analyst</div>
+            <div class="form-group" style="margin-bottom:12px;">
+              <label class="form-label">Resume</label>
+              <select class="form-select"><option>Federal Resume v3 — Feb 2025</option></select>
+            </div>
+            <div class="form-group" style="margin-bottom:16px;">
+              <label class="form-label">Statement of Interest</label>
+              <textarea class="form-textarea" style="min-height:80px;" placeholder="Optional: Why are you a strong fit?"></textarea>
+            </div>
+            <div class="check-item" style="margin-bottom:14px;">
+              <div class="check-box checked"></div>
+              <span class="check-label" style="font-size:12px;">I certify all information is accurate and complete</span>
+            </div>
+            <button class="btn btn-lg btn-primary" style="width:100%;justify-content:center;">Submit Application →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━ MISC ━━ -->
+  <section class="section alt" id="misc">
+    <div class="section-label">
+      <div class="sl-num">10</div>
+      <div class="sl-text">
+        <div class="sl-title">Loaders & States</div>
+        <div class="sl-sub">Skeleton loaders, empty states, tooltips</div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Skeleton Loading State</div>
+      <div class="comp-canvas col">
+        <div style="background:var(--bg-white);border:1px solid var(--border);padding:22px;width:100%;max-width:560px;">
+          <div style="display:flex;gap:12px;align-items:center;margin-bottom:14px;">
+            <div class="skeleton sk-circle"></div>
+            <div style="flex:1;">
+              <div class="skeleton sk-line medium"></div>
+              <div class="skeleton sk-line short" style="margin-bottom:0;"></div>
+            </div>
+          </div>
+          <div class="skeleton sk-line long"></div>
+          <div class="skeleton sk-line medium"></div>
+          <div class="skeleton sk-line short"></div>
+          <div style="display:flex;gap:8px;margin-top:10px;">
+            <div class="skeleton" style="height:24px;width:80px;border-radius:2px;"></div>
+            <div class="skeleton" style="height:24px;width:100px;border-radius:2px;"></div>
+            <div class="skeleton" style="height:24px;width:70px;border-radius:2px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Empty States</div>
+      <div class="comp-canvas grid-2">
+        <div class="empty-state">
+          <span class="empty-icon">🔍</span>
+          <div class="empty-title">No jobs found</div>
+          <div class="empty-desc">Try broadening your search or removing some filters to see more results.</div>
+          <button class="btn btn-md btn-ghost">Clear All Filters</button>
+        </div>
+        <div class="empty-state">
+          <span class="empty-icon">★</span>
+          <div class="empty-title">No saved jobs yet</div>
+          <div class="empty-desc">Jobs you save will appear here. Start browsing and star the ones you like.</div>
+          <button class="btn btn-md btn-primary">Browse Jobs</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-block">
+      <div class="comp-label">Tooltip</div>
+      <div class="comp-canvas" style="padding-top:64px;">
+        <div class="tooltip-demo">
+          <span class="tooltip-box">GS-13 salary ranges from $112,015 to $145,617 in Washington D.C. locality</span>
+          <span class="tooltip-target">What does GS-13 mean?</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /main -->
+</body>
+</html>
